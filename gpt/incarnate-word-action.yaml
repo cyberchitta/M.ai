@@ -93,7 +93,7 @@ paths:
                           description: Matching text excerpt from the works.
                         url:
                           type: string
-                          description: URL to find the excerpt on the website.
+                          description: URL path to find the excerpt on the website.
                         t:
                           type: string
                           description: Title of the document or section where the text is found.
