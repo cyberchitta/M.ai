@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Incarnate Word API
+  description: API for querying works by the Mother and Sri Aurobindo, providing citations to original source material.
+  version: 1.0.0
+servers:
+  - url: https://incarnateword.in/api/v2
+    description: Incarnate Word API server
+paths:
+  /search:
+    get:
+      operationId: searchCitationsComplete
+      summary: Comprehensive search for citations in the works of the Mother and Sri Aurobindo.
+      parameters:
+        - in: query
+          name: q
+          required: true
+          description: Dynamic query term for the search.
+          schema:
+            type: string
+        - in: query
+          name: phrase
+          schema:
+            type: boolean
+          description: Whether to search for the exact phrase.
+        - in: query
+          name: anyTerm
+          schema:
+            type: boolean
+          description: Whether any term in the query must be matched.
+        - in: query
+          name: priorityIndex
+          schema:
+            type: boolean
+          description: Whether to prioritize indexing in search results.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Page number for pagination.
+        - in: query
+          name: sortby
+          schema:
+            type: string
+          description: Sorting parameter for the search results.
+      responses:
+        '200':
+          description: Successful search operation, returning comprehensive details including citations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: integer
+                    description: Time taken for the search operation.
+                  Paging:
+                    type: object
+                    properties:
+                      Skip:
+                        type: integer
+                      Take:
+                        type: integer
+                      IsNeedPaging:
+                        type: boolean
+                      TotalCount:
+                        type: integer
+                      CurrentPage:
+                        type: integer
+                      ItemsPerPage:
+                        type: integer
+                      TotalPagesCount:
+                        type: integer
+                  c:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        path:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              t:
+                                type: string
+                                description: Title of the breadcrumb level.
+                              u:
+                                type: string
+                                description: URL of the breadcrumb level.
+                          description: Breadcrumb path indicating the source of the citation.
+                        txt:
+                          type: string
+                          description: Matching text excerpt from the works.
+                        url:
+                          type: string
+                          description: URL to find the excerpt on the website.
+                        t:
+                          type: string
+                          description: Title of the document or section where the text is found.
+                        searchedIn:
+                          type: string
+                          description: Indicates where the search was performed.
