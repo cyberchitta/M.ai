@@ -13,9 +13,8 @@ if System.get_env("PHX_SERVER") do
   config :mai, MaiWeb.Endpoint, server: true
 end
 
-config :mai, MaiWeb.Endpoint, secret_key_base: env!("SECRET_KEY_BASE", :string)
-
 config :mai, MaiWeb.Endpoint,
+  secret_key_base: env!("SECRET_KEY_BASE", :string),
   http: [
     ip:
       env!("PHX_IP", fn ip ->
