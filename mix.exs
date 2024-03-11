@@ -27,6 +27,7 @@ defmodule Mai.MixProject do
     [
       {:bandit, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
+      {:dotenvy, "~> 0.8.0"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:floki, ">= 0.30.0", only: :test},
       {:heroicons,
