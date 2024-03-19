@@ -1,0 +1,30 @@
+<div class="flex w-full">
+  <div class="mr-4">
+    <img
+      src={@src}
+      class="max-w-[28px] object-cover rounded-full"
+      alt="profile"
+      draggable="false"
+    />
+  </div>
+  <div class="w-full overflow-hidden">
+    <div class="user-message">
+      <div class="self-center font-bold mb-0.5 capitalize line-clamp-1">
+        You
+      </div>
+    </div>
+    <div class="
+      prose chat-{@message.role} w-full max-w-full dark:prose-invert prose-headings:my-0 prose-p:my-0 
+      prose-p:-mb-4 prose-pre:my-0 prose-table:my-0 prose-blockquote:my-0 prose-img:my-0 
+      prose-ul:-my-4 prose-ol:-my-4 prose-li:-my-3 prose-ul:-mb-6 prose-ol:-mb-6 prose-li:-mb-4 
+      whitespace-pre-line
+    ">
+      <.attachments message: @message, modelfiles: @modelfiles />
+      <%= if @edit do %>
+        <.in_edit message: @message />
+      <% else %>
+        <.req_with_controls message: @message />
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<textarea
+  id={"message-edit-#{@message.id}"}
+  phx-hook="AutoResizeTextarea"
+  class="bg-transparent outline-none w-full resize-none"
+  value={@editedContent}
+></textarea>
+<div class="mt-2 mb-1 flex justify-center space-x-2 text-sm font-medium">
+  <button
+    phx-click="save_edit"
+    phx-value-id={@message.id}
+    class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white transition rounded-lg"
+  >
+    Save & Submit
+  </button>
+  <button
+    phx-click="cancel_edit"
+    class="px-4 py-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-white transition outline outline-1 outline-gray-200 dark:outline-gray-600 rounded-lg"
+  >
+    Cancel
+  </button>
+</div>

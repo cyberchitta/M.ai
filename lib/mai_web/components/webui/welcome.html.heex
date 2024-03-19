@@ -1,0 +1,54 @@
+<%= if Enum.count(@models) > 0 do %>
+  <div class="m-auto text-center max-w-md px-2">
+    <div class="flex justify-center mt-8">
+      <div class="flex -space-x-4 mb-1">
+        <%= for {model, modelIdx} <- Enum.with_index(@models) do %>
+          <button phx-click="select_model" phx-value-index={modelIdx}>
+            <%= if model in Map.keys(@modelfiles) do %>
+              <img
+                src={
+                  Map.get(@modelfiles, model).image_url || "#{@webui_base_url}/static/favicon.png"
+                }
+                alt="modelfile"
+                class="w-14 rounded-full border-[1px] border-gray-200 dark:border-none"
+                draggable="false"
+              />
+            <% else %>
+              <img
+                src={
+                  if Enum.count(@models) === 1,
+                    do: "#{@webui_base_url}/static/favicon.png",
+                    else: "#{@webui_base_url}/static/favicon.png"
+                }
+                class="w-14 rounded-full border-[1px] border-gray-200 dark:border-none"
+                alt="logo"
+                draggable="false"
+              />
+            <% end %>
+          </button>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-2 mb-5 text-2xl text-gray-800 dark:text-gray-100 font-semibold">
+      <%= if @modelfile do %>
+        <span class="capitalize"><%= @modelfile.title %></span>
+        <div class="mt-0.5 text-base font-normal text-gray-600 dark:text-gray-400">
+          <%= @modelfile.desc %>
+        </div>
+        <%= if @modelfile.user do %>
+          <div class="mt-0.5 text-sm font-normal text-gray-500 dark:text-gray-500">
+            By
+            <a href="https://openwebui.com/m/#{@modelfile.user.username}">
+              <%= if @modelfile.user.name,
+                do: @modelfile.user.name,
+                else: "@#{@modelfile.user.username}" %>
+            </a>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="line-clamp-1">Hello, <%= @user.name %></div>
+        <div>How can I help you today?</div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

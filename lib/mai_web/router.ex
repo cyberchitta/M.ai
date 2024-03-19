@@ -17,7 +17,7 @@ defmodule MaiWeb.Router do
   scope "/", MaiWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", PageController, :chat
   end
 
   # Other scopes may use custom stacks.

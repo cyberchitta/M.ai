@@ -1,0 +1,108 @@
+<div class="w-full">
+  <div class="px-2.5 -mb-0.5 mx-auto inset-x-0 bg-transparent flex justify-center">
+    <div class="flex flex-col max-w-3xl w-full">
+      <div class="relative">
+        <%= if not @auto_scroll and Enum.any?(@messages) do %>
+          <div class="absolute -top-12 left-0 right-0 flex justify-center">
+            <button
+              phx-click="scroll_to_bottom"
+              class="bg-white border border-gray-100 dark:border-none dark:bg-white/20 p-1.5 rounded-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        <% end %>
+      </div>
+      <div class="w-full relative">
+        <%= if String.starts_with?(@prompt, "/") do %>
+          <.prompt_commands prompt={@prompt} id="prompts" phx-hook="PromptsHook" />
+        <% end %>
+        <%= if String.starts_with?(@prompt, "#") do %>
+          <.documents
+            prompt={@prompt}
+            id="documents"
+            phx-hook="DocumentsHook"
+            phx-update="ignore"
+            phx-target={@myself}
+            phx-click="select"
+            phx-value-detail={@select_detail}
+          />
+        <% end %>
+        <%= if String.starts_with?(@prompt, "@") do %>
+          <.models
+            prompt={@prompt}
+            user={@user}
+            chat_input_placeholder={@chat_input_placeholder}
+            messages={@messages}
+            id="models"
+            phx-hook="ModelsHook"
+          />
+        <% end %>
+        <%= if Enum.empty?(@messages) and not Enum.empty?(@suggestion_prompts) do %>
+          <.suggestions submit_prompt={@submit_prompt} />
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="bg-white dark:bg-gray-900">
+    <div class="max-w-3xl px-2.5 mx-auto inset-x-0">
+      <div class="pb-2">
+        <form
+          phx-submit="submit_prompt"
+          class="flex flex-col relative w-full rounded-3xl px-1.5 border border-gray-100 dark:border-gray-850 bg-white dark:bg-gray-900 dark:text-gray-100"
+        >
+          <.previews files={@files} />
+          <div class="flex">
+            <%= if @file_upload_enabled do %>
+              <div class="self-end mb-2 ml-1">
+                <.tooltip content="Upload files">
+                  <button
+                    class="bg-gray-50 hover:bg-gray-100 text-gray-800 dark:bg-gray-850 dark:text-white dark:hover:bg-gray-800 transition rounded-full p-1.5"
+                    type="button"
+                    phx-click="open-file-input"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      class="w-[1.2rem] h-[1.2rem]"
+                    >
+                      <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+                    </svg>
+                  </button>
+                </.tooltip>
+              </div>
+            <% end %>
+            <textarea
+              id="chat-textarea"
+              phx-hook="AutoExpand"
+              name="prompt"
+              class="dark:bg-gray-900 dark:text-gray-100 outline-none w-full py-3 px-3 rounded-xl resize-none h-[48px]"
+              placeholder="#{@chat_input_placeholder}"
+            ></textarea>
+            <.voice_n_send
+              speech_recognition_enabled={@speech_recognition_enabled}
+              prompt={@prompt}
+              messages={@messages}
+              is_recording={@is_recording}
+            />
+          </div>
+        </form>
+        <div class="mt-1.5 text-xs text-gray-500 text-center">
+          LLMs can make mistakes. Verify important information.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

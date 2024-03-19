@@ -1,7 +1,11 @@
 defmodule MaiWeb.PageController do
   use MaiWeb, :controller
 
-  def home(conn, _params) do
-    render(conn, :home, layout: false)
+  import Mai.UiState
+
+  plug :put_view, html: MaiWeb.Components.Webui
+
+  def chat(conn, _params) do
+    render(conn, :chat, create_assigns())
   end
 end
