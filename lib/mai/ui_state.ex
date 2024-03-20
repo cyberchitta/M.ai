@@ -15,7 +15,8 @@ defmodule Mai.UiState do
     messages_assigns =
       Mai.UiState.Messages.create_assigns([
         system("You are Mai, an expert on the works of Sri Aurobindo and the Mother"),
-        user("Hello Mai")
+        user("Hello Mai"),
+        assistant("Hello friend, How can I help you today?")
       ])
 
     selected_models = %{}
@@ -425,7 +426,6 @@ defmodule Mai.UiState.Response do
         regenerate_response,
         edit,
         edited_content,
-        tokens_assigns,
         config_assigns,
         loading_speech,
         speaking,
@@ -447,25 +447,11 @@ defmodule Mai.UiState.Response do
       regenerate_response: regenerate_response,
       edit: edit,
       edited_content: edited_content,
-      tokens: tokens_assigns,
       config: config_assigns,
       loading_speech: loading_speech,
       speaking: speaking,
       generating_image: generating_image
     }
-  end
-end
-
-defmodule Mai.UiState.Tokens do
-  def create_assigns(tokens) do
-    Enum.map(tokens || [], fn token ->
-      %{
-        type: token[:type],
-        lang: token[:lang],
-        text: token[:text],
-        raw: token[:raw]
-      }
-    end)
   end
 end
 

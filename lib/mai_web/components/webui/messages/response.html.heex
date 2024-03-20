@@ -75,15 +75,9 @@
                   </div>
                 </div>
               <% else %>
-                <%= for token <- @tokens do %>
-                  <%= if token.type === "code" do %>
-                    <.code_block lang={token.lang} code={token.text} />
-                  <% else %>
-                    <%= raw(
-                      Earmark.as_html!(token.raw, %Earmark.Options{gfm: true, breaks: true})
-                    ) %>
-                  <% end %>
-                <% end %>
+                <%= raw(
+                  Earmark.as_html!(@message.content, %Earmark.Options{gfm: true, breaks: true})
+                ) %>
               <% end %>
               <%= if @message.done do %>
                 <.res_controls

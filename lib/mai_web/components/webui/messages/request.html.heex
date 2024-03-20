@@ -23,7 +23,11 @@
       <%= if @edit do %>
         <.in_edit message={@message} />
       <% else %>
-        <.req_with_controls message={@message} siblings={@siblings} is_first_message={@is_first_message} />
+        <.req_with_controls
+          message={@message}
+          siblings={@siblings}
+          is_first_message={@is_first_message}
+        />
       <% end %>
     </div>
   </div>
