@@ -14,7 +14,8 @@ defmodule Mai.UiState do
 
     messages_assigns =
       Mai.UiState.Messages.create_assigns([
-        system("You are Mai, an expert on the works of Sri Aurobindo and the Mother")
+        system("You are Mai, an expert on the works of Sri Aurobindo and the Mother"),
+        user("Hello Mai")
       ])
 
     selected_models = %{}
@@ -32,7 +33,7 @@ defmodule Mai.UiState do
     webui_name = nil
     webui_base_url = nil
     settings_assigns = Mai.UiState.Settings.create_assigns(false)
-    user = nil
+    user = ""
     confirm_edit_message = false
     confirm_edit_response_message = false
     show_previous_message = false
@@ -47,8 +48,9 @@ defmodule Mai.UiState do
     loading_speech = false
     speaking = false
     generating_image = false
-    rate_message= false
-    edit= false
+    rate_message = false
+    edit = false
+    src = "/images/user.png"
 
     Mai.UiState.Chat.create_assigns(
       loaded,
@@ -89,7 +91,8 @@ defmodule Mai.UiState do
       speaking,
       generating_image,
       rate_message,
-      edit
+      edit,
+      src
     )
   end
 end
@@ -134,7 +137,8 @@ defmodule Mai.UiState.Chat do
         speaking,
         generating_image,
         rate_message,
-        edit
+        edit,
+        src
       ) do
     %{
       loaded: loaded,
@@ -175,7 +179,8 @@ defmodule Mai.UiState.Chat do
       speaking: speaking,
       generating_image: generating_image,
       rate_message: rate_message,
-      edit: edit
+      edit: edit,
+      src: src
     }
   end
 end

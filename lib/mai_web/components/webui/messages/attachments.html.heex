@@ -1,4 +1,4 @@
-<%= if Enum.any?(@message.files) do %>
+<%= if ! Enum.empty?(@message.files) do %>
   <div class="my-2.5 w-full flex overflow-x-auto gap-2 flex-wrap">
     <%= for {f, _file_idx} <- Enum.with_index(@messages.files) do %>
       <div>

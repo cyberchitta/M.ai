@@ -12,6 +12,7 @@
               id={"user_message_#{message.id}"}
               user={@user}
               message={message}
+              modelfiles={@selected_modelfiles}
               is_first_message={message_idx === 0}
               siblings={
                 if message.parent_id !== nil,
@@ -25,6 +26,7 @@
               show_next_message={@show_next_message}
               copy_to_clipboard={@copy_to_clipboard}
               edit={@edit}
+              src={@src}
               phx-click="delete"
               phx-value-message_id={message.id}
             />

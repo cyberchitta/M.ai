@@ -19,11 +19,11 @@
       prose-ul:-my-4 prose-ol:-my-4 prose-li:-my-3 prose-ul:-mb-6 prose-ol:-mb-6 prose-li:-mb-4 
       whitespace-pre-line
     ">
-      <.attachments message: @message, modelfiles: @modelfiles />
+      <.attachments message={@message} modelfiles={@modelfiles} />
       <%= if @edit do %>
-        <.in_edit message: @message />
+        <.in_edit message={@message} />
       <% else %>
-        <.req_with_controls message: @message />
+        <.req_with_controls message={@message} siblings={@siblings} is_first_message={@is_first_message} />
       <% end %>
     </div>
   </div>
