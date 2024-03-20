@@ -3,6 +3,9 @@ defmodule MaiWeb.Components.Webui do
 
   embed_templates "webui/common/*.html"
 
+  attr :content, :string, required: true
+  attr :placement, :string, default: "top"
+  attr :touch, :string, default: "true"
   def tooltip(assigns)
 
   embed_templates "webui/*.html"

@@ -1,9 +1,8 @@
 <div
-  id="tooltip-#{@id}"
-  phx-hook="Tooltip"
-  data-content="#{@content}"
-  data-placement="#{@placement}"
-  data-touch="#{@touch}"
+  aria-label={"#{@content}"}
+  data-content={"#{@content}"}
+  data-placement={"#{@placement}"}
+  data-touch={"#{@touch}"}
 >
   <%= render_slot(@inner_block) %>
 </div>
