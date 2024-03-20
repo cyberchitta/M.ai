@@ -5,6 +5,8 @@
     <%= for {message, message_idx} <- Enum.with_index(@messages) do %>
       <div class="w-full">
         <div class={"flex flex-col justify-between px-5 mb-3 #{if @settings[:full_screen_mode], do: "max-w-full", else: "max-w-3xl"} mx-auto rounded-lg group"}>
+          <%= if message.role === "system" do %>
+          <% end %>
           <%= if message.role === "user" do %>
             <.request
               id={"user_message_#{message.id}"}
@@ -22,10 +24,12 @@
               show_previous_message={@show_previous_message}
               show_next_message={@show_next_message}
               copy_to_clipboard={@copy_to_clipboard}
+              edit={@edit}
               phx-click="delete"
               phx-value-message_id={message.id}
             />
-          <% else %>
+          <% end %>
+          <%= if message.role === "assistant" do %>
             <.response
               id={"response_message_#{message.id}"}
               message={message}
@@ -39,6 +43,9 @@
               copy_to_clipboard={@copy_to_clipboard}
               continue_generation={@continue_generation}
               regenerate_response={@regenerate_response}
+              webui_base_url={@webui_base_url}
+              edit={@edit}
+              tokens={[message.content]}
               phx-hook="SaveMessageHook"
             />
           <% end %>

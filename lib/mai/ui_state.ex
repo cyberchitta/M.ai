@@ -1,4 +1,6 @@
 defmodule Mai.UiState do
+  import Mai.CC.Message
+
   def create_assigns() do
     loaded = true
     title = "Welcome to Mai"
@@ -9,10 +11,18 @@ defmodule Mai.UiState do
     send_prompt = false
     stop_response = false
     select_detail = false
-    messages_assigns = Mai.UiState.Messages.create_assigns([])
+
+    messages_assigns =
+      Mai.UiState.Messages.create_assigns([
+        system("You are Mai, an expert on the works of Sri Aurobindo and the Mother")
+      ])
+
     selected_models = %{}
     selected_modelfiles_assigns = %{}
-    history_assigns = %{}
+
+    history_assigns =
+      Mai.UiState.History.create_assigns(Mai.UiState.HistoryMessages.create_assigns([]))
+
     files_assigns = Mai.UiState.Files.create_assigns([])
     continue_generation = false
     regenerate_response = false
@@ -37,6 +47,8 @@ defmodule Mai.UiState do
     loading_speech = false
     speaking = false
     generating_image = false
+    rate_message= false
+    edit= false
 
     Mai.UiState.Chat.create_assigns(
       loaded,
@@ -75,7 +87,9 @@ defmodule Mai.UiState do
       is_recording,
       loading_speech,
       speaking,
-      generating_image
+      generating_image,
+      rate_message,
+      edit
     )
   end
 end
@@ -118,7 +132,9 @@ defmodule Mai.UiState.Chat do
         is_recording,
         loading_speech,
         speaking,
-        generating_image
+        generating_image,
+        rate_message,
+        edit
       ) do
     %{
       loaded: loaded,
@@ -157,7 +173,9 @@ defmodule Mai.UiState.Chat do
       is_recording: is_recording,
       loading_speech: loading_speech,
       speaking: speaking,
-      generating_image: generating_image
+      generating_image: generating_image,
+      rate_message: rate_message,
+      edit: edit
     }
   end
 end
