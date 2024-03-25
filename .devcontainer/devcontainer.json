@@ -1,0 +1,16 @@
+{
+    "name": "M.ai",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "web",
+    "workspaceFolder": "/M.ai",
+    "shutdownAction": "stopCompose",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+				"jakebecker.elixir-ls",
+				"eamodio.gitlens",
+				"github.vscode-pull-request-github"
+			]
+        }
+    }
+}
