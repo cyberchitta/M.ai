@@ -1,0 +1,23 @@
+<span style="opacity: 1; transform: none;">
+  <button
+    class="btn relative btn-neutral group w-full whitespace-nowrap rounded-xl px-4 py-3 text-left text-token-text-primary md:whitespace-normal"
+    phx-click="suggest"
+    phx-value-index={"#{@index}"}
+  >
+    <div class="flex w-full gap-2 items-center justify-center">
+      <div class="flex w-full items-center justify-between">
+        <div class="flex flex-col overflow-hidden">
+          <div class="truncate"><%= @title %></div>
+          <div class="truncate font-normal opacity-50"><%= @description %></div>
+        </div>
+        <div class="absolute bottom-0 right-0 top-0 flex items-center rounded-xl bg-gradient-to-l from-token-main-surface-secondary pl-6 pr-4 text-token-text-secondary opacity-0 can-hover:group-hover:opacity-100">
+          <span class="" data-state="closed">
+            <div class="rounded-lg bg-token-main-surface-primary p-1 shadow-xxs dark:shadow-none">
+              <.icon name="hero-arrow-down" class="w-6 h-6" />
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </button>
+</span>

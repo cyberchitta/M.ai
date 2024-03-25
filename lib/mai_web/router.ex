@@ -10,14 +10,12 @@ defmodule MaiWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", MaiWeb do
     pipe_through :browser
 
     get "/", PageController, :chat
+
+    resources "/chats", PageController, only: [:show]
   end
 
   # Other scopes may use custom stacks.

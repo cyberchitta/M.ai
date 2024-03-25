@@ -20,7 +20,7 @@ defmodule Mai.UiState do
       ])
 
     selected_models = %{}
-    selected_modelfiles_assigns = %{}
+    selected_modelfiles_assigns = %{mai: %{title: "M.ai", image_url: "/images/mai-avatar.png"}}
 
     history_assigns =
       Mai.UiState.History.create_assigns(Mai.UiState.HistoryMessages.create_assigns([]))
@@ -221,22 +221,9 @@ defmodule Mai.UiState.Models do
 end
 
 defmodule Mai.UiState.Messages do
-  def create_assigns(messages) do
-    Enum.map(messages || [], fn message ->
-      %{
-        id: message[:id],
-        role: message[:role],
-        content: message[:content],
-        parent_id: message[:parent_id],
-        children_ids: message[:children_ids],
-        model: message[:model],
-        timestamp: message[:timestamp],
-        files: Mai.UiState.Files.create_assigns(message[:files]),
-        error: message[:error],
-        done: message[:done],
-        rating: message[:rating],
-        info: message[:info]
-      }
+  def create_assigns(cc_messages) do
+    Enum.map(cc_messages || [], fn message ->
+      Mai.Message.mai(message)
     end)
   end
 end

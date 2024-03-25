@@ -3,6 +3,8 @@ defmodule MaiWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
-    assert html_response(conn, 200) =~ "LLMs can make mistakes. Verify important information."
+
+    assert html_response(conn, 200) =~
+             "LLMs can make mistakes. Consider checking important information."
   end
 end

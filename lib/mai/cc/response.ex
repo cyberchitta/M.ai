@@ -1,4 +1,3 @@
 defmodule Mai.CC.Response do
-@moduledoc false
-
+  @moduledoc false
 end

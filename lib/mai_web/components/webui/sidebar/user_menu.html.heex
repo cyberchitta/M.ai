@@ -1,0 +1,31 @@
+<div class="group relative" data-headlessui-state="">
+  <button
+    class="flex w-full max-w-[100%] items-center gap-2 rounded-lg p-2 text-sm hover:bg-token-sidebar-surface-secondary group-ui-open:bg-token-sidebar-surface-secondary"
+    id="headlessui-menu-button-:rim:"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    data-headlessui-state=""
+  >
+    <div class="flex-shrink-0">
+      <div class="flex items-center justify-center overflow-hidden rounded-full">
+        <div class="relative flex">
+          <img
+            alt="User"
+            loading="lazy"
+            width="32"
+            height="32"
+            decoding="async"
+            data-nimg="1"
+            class="rounded-sm"
+            src={"#{@user.avatar_url}"}
+            style="color: transparent;"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="relative -top-px grow -space-y-px truncate text-left text-token-text-primary">
+      <div><%= @user.name %></div>
+    </div>
+  </button>
+</div>

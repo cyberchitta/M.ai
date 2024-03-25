@@ -1,8 +1,3 @@
-<div
-  aria-label={"#{@content}"}
-  data-content={"#{@content}"}
-  data-placement={"#{@placement}"}
-  data-touch={"#{@touch}"}
->
+<div class="tooltip custom-tooltip" aria-label={"#{@content}"} data-tip={"#{@content}"}>
   <%= render_slot(@inner_block) %>
 </div>
