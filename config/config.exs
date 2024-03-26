@@ -1,13 +1,15 @@
 import Config
 
 config :mai, Mai.Repo,
-  adapter: Exandra,
-  contact_points: ["127.0.0.1"],
+  migration_primary_key: [name: :id, type: :binary_id],
+  contact_points: ["scylladb"],
   keyspace: "mai_chat",
   port: 9042
 
 config :mai,
   generators: [timestamp_type: :utc_datetime]
+
+config :mai, ecto_repos: [Mai.Repo]
 
 config :mai, MaiWeb.Endpoint,
   url: [host: "localhost"],
