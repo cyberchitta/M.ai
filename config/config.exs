@@ -1,5 +1,11 @@
 import Config
 
+config :mai, Mai.Repo,
+  adapter: Exandra,
+  contact_points: ["127.0.0.1"],
+  keyspace: "mai_chat",
+  port: 9042
+
 config :mai,
   generators: [timestamp_type: :utc_datetime]
 
