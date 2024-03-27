@@ -8,7 +8,11 @@ defmodule Mai.Chat.Message do
     field(:order, :integer)
 
     belongs_to(:chat, Mai.Chat.Chat)
-    belongs_to(:original_message, Mai.Chat.Message, foreign_key: :original_message_id, type: :binary_id)
+
+    belongs_to(:original_message, Mai.Chat.Message,
+      foreign_key: :original_message_id,
+      type: :binary_id
+    )
 
     timestamps()
   end
