@@ -1,8 +1,5 @@
 import Config
 
-config :mai,
-  generators: [timestamp_type: :utc_datetime]
-
 config :mai, MaiWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
@@ -12,6 +9,16 @@ config :mai, MaiWeb.Endpoint,
   ],
   pubsub_server: Mai.PubSub,
   live_view: [signing_salt: "zs6SQ7ka"]
+
+config :mai,
+  generators: [timestamp_type: :utc_datetime]
+
+config :mai, ecto_repos: [Mai.Repo]
+
+config :mai, Mai.Repo,
+  migration_primary_key: [name: :id, type: :binary_id],
+  nodes: ["scylladb"],
+  keyspace: "mai_chat"
 
 config :esbuild,
   version: "0.17.11",

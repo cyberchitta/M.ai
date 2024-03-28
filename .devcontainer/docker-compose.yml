@@ -11,14 +11,19 @@ services:
       - 4000:4000
       - 4001:4001
 
-  livebook:
-    image: ghcr.io/livebook-dev/livebook:0.12.1
-    environment:
-      # secrets - values are set in '.env'. It's not in version control, but look at 'env'
-      LIVEBOOK_PASSWORD: ${LIVEBOOK_PASSWORD}
-      LIVEBOOK_DEFAULT_RUNTIME: attached:test@web:mycookie
-    volumes:
-      - ..:/data
+  scylladb:
+    image: scylladb/scylla:5.4
     ports:
-      - 8080:8080
-      - 8081:8081
+      - 9042:9042
+    command:
+      - "--smp"
+      - "1"
+    healthcheck:
+      test: [ "CMD-SHELL", "nodetool -h ::FFFF:127.0.0.1 status" ]
+      interval: 20s
+      timeout: 10s
+      retries: 12
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
