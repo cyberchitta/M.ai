@@ -18,8 +18,7 @@ config :mai, ecto_repos: [Mai.Repo]
 config :mai, Mai.Repo,
   migration_primary_key: [name: :id, type: :binary_id],
   nodes: ["scylladb"],
-  keyspace: "mai_chat",
-  port: 9042
+  keyspace: "mai_chat"
 
 config :esbuild,
   version: "0.17.11",
