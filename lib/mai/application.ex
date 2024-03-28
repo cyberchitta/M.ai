@@ -10,9 +10,6 @@ defmodule Mai.Application do
       MaiWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:mai, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mai.PubSub},
-      # Start a worker by calling: Mai.Worker.start_link(arg)
-      # {Mai.Worker, arg},
-      # Start to serve requests, typically the last entry
       MaiWeb.Endpoint
     ]
 
