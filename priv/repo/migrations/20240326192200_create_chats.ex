@@ -1,4 +1,4 @@
-defmodule Repo.Migrations.CreateChats do
+defmodule Mai.Repo.Migrations.CreateChats do
   use Ecto.Migration
 
   def change do
