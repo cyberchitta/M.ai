@@ -11,8 +11,5 @@ defmodule Mai.Repo.Migrations.CreateUsers do
 
       timestamps()
     end
-
-    create(unique_index(:users, [:google_id]))
-    create(unique_index(:users, [:email]))
   end
 end
