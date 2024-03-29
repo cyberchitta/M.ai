@@ -16,7 +16,7 @@ config :mai,
 config :mai, ecto_repos: [Mai.Repo]
 
 config :mai, Mai.Repo,
-  migration_primary_key: [name: :id, type: :binary_id],
+  migration_primary_key: [name: :id, type: :uuid],
   nodes: ["scylladb"],
   keyspace: "mai_chat"
 

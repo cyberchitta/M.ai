@@ -3,12 +3,12 @@ defmodule Mai.Repo.Migrations.CreateMessages do
 
   def change do
     create table(:messages, primary_key: false) do
-      add(:id, :binary_id, primary_key: true)
+      add(:id, :uuid, primary_key: true)
       add(:role, :string)
       add(:content, :string)
 
-      add(:chat_id, :binary_id)
-      add(:original_message_id, :binary_id)
+      add(:chat_id, :uuid)
+      add(:original_message_id, :uuid)
 
       timestamps()
     end
