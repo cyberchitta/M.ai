@@ -4,7 +4,6 @@ defmodule Mai.Repo.Migrations.CreateMessages do
   def change do
     create table(:messages, primary_key: false) do
       add(:id, :binary_id, primary_key: true)
-      add(:order, :int)
       add(:role, :string)
       add(:content, :string)
 
