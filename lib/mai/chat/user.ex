@@ -2,7 +2,7 @@ defmodule Mai.Chat.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "users" do
     field(:google_id, :string)
     field(:email, :string)

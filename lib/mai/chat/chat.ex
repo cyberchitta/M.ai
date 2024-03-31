@@ -2,12 +2,12 @@ defmodule Mai.Chat.Chat do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
+  @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "chats" do
     field(:name, :string)
     field(:description, :string)
 
-    belongs_to(:user, Mai.Chat.User, foreign_key: :user_id, type: :binary_id)
+    belongs_to(:user, Mai.Chat.User, foreign_key: :user_id, type: Ecto.UUID)
     has_many(:messages, Mai.Chat.Message, foreign_key: :chat_id)
 
     timestamps()
