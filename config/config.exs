@@ -13,12 +13,15 @@ config :mai, MaiWeb.Endpoint,
 config :mai,
   generators: [timestamp_type: :utc_datetime]
 
-config :mai, ecto_repos: [Mai.Repo]
+config :mai, ecto_repos: [Mai.RepoPostgres]
 
-config :mai, Mai.Repo,
+config :mai, Mai.RepoPostgres, priv: "priv/repo/postgres"
+
+config :mai, Mai.RepoXandra,
   migration_primary_key: [name: :id, type: :uuid],
   nodes: ["scylladb"],
-  keyspace: "mai_chat"
+  keyspace: "mai_chat",
+  priv: "priv/repo/xandra"
 
 config :esbuild,
   version: "0.17.11",

@@ -6,7 +6,7 @@ defmodule Mai.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      Mai.Repo,
+      Mai.RepoPostgres,
       MaiWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:mai, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mai.PubSub},

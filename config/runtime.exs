@@ -27,6 +27,18 @@ config :mai, MaiWeb.Endpoint,
     port: env!("PHX_PORT", :integer)
   ]
 
+config :mai, Mai.RepoPostgres,
+  url:
+    (
+      pg_db = Application.fetch_env!(:mai, Mai.RepoPostgres)[:database]
+      pg_user = env!("POSTGRES_USER")
+      pg_passwd = env!("POSTGRES_PASSWORD")
+      pg_host = env!("POSTGRES_HOST")
+      pg_port = env!("PGPORT")
+      "postgres://#{pg_user}:#{pg_passwd}@#{pg_host}:#{pg_port}/#{pg_db}"
+    ),
+  ssl: false
+
 if config_env() == :prod do
   host = env!("PHX_HOST", :string, "example.com")
 

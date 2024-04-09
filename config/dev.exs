@@ -17,7 +17,12 @@ config :mai, MaiWeb.Endpoint,
     ]
   ]
 
-config :mai, Mai.Repo,
+config :mai, Mai.RepoPostgres,
+  database: "mai_chat_dev",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+config :mai, Mai.RepoXandra,
   sync_connect: 5000,
   log: :info,
   stacktrace: true,
