@@ -1,4 +1,4 @@
-defmodule Mai.Chat.Message do
+defmodule Mai.Schemas.Message do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,9 +7,9 @@ defmodule Mai.Chat.Message do
     field(:content, :string)
     field(:role, :string)
 
-    belongs_to(:chat, Mai.Chat.Chat, foreign_key: :chat_id, type: Ecto.UUID)
+    belongs_to(:chat, Mai.Schemas.Chat, foreign_key: :chat_id, type: Ecto.UUID)
 
-    belongs_to(:original_message, Mai.Chat.Message,
+    belongs_to(:original_message, Mai.Schemas.Message,
       foreign_key: :original_message_id,
       type: Ecto.UUID
     )

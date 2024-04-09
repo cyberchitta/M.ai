@@ -1,4 +1,4 @@
-defmodule Mai.Chat.Chat do
+defmodule Mai.Schemas.Chat do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,8 +7,8 @@ defmodule Mai.Chat.Chat do
     field(:name, :string)
     field(:description, :string)
 
-    belongs_to(:user, Mai.Chat.User, foreign_key: :user_id, type: Ecto.UUID)
-    has_many(:messages, Mai.Chat.Message, foreign_key: :chat_id)
+    belongs_to(:user, Mai.Schemas.User, foreign_key: :user_id, type: Ecto.UUID)
+    has_many(:messages, Mai.Schemas.Message, foreign_key: :chat_id)
 
     timestamps()
   end

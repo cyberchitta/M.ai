@@ -1,7 +1,7 @@
 alias Mai.Repo
-alias Mai.Chat.User
-alias Mai.Chat.Chat
-alias Mai.Chat.Message
+alias Mai.Schemas.User
+alias Mai.Schemas.Chat
+alias Mai.Schemas.Message
 
 create_user_data = fn user_attrs ->
   user = %User{}
