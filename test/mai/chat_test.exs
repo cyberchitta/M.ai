@@ -4,12 +4,11 @@ defmodule Mai.ChatTest do
   alias Mai.Contexts.Chat
 
   setup do
-    setup_test_data()
+#    Mai.Fixtures.seed_data()
     :ok
   end
 
   test "get_chat_details/1 returns the chat details and messages" do
-    # Assuming at least one chat is created in the seeds.exs file
     chat = Mai.RepoPostgres.one(from(c in Mai.Schemas.Chat, limit: 1))
     chat_details = Chat.get_chat_details(chat.id)
 
