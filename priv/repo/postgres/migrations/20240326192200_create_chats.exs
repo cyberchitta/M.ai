@@ -3,7 +3,7 @@ defmodule Mai.Repo.Postgres.Migrations.CreateChats do
 
   def change do
     create table(:chats, primary_key: false) do
-      add(:id, :uuid, primary_key: true, default: fragment("uuid_generate_v4()"))
+      add(:id, :uuid, primary_key: true, default:  Ecto.UUID.generate())
       add(:name, :string, null: false)
       add(:description, :string)
 
