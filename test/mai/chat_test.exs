@@ -4,7 +4,7 @@ defmodule Mai.ChatTest do
   alias Mai.Contexts.Chat
 
   setup do
-#    Mai.Fixtures.seed_data()
+    #    Mai.Fixtures.seed_data()
     :ok
   end
 

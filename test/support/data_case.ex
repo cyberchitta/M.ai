@@ -23,7 +23,7 @@ defmodule Mai.DataCase do
   end
 
   def setup_test_data do
-#    Code.require_file("priv/repo/postgres/seeds.exs")
+    #    Code.require_file("priv/repo/postgres/seeds.exs")
     Mai.Fixtures.seed_data()
     :ok
   end

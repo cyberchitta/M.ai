@@ -4,7 +4,7 @@ defmodule Mai.UserTest do
   alias Mai.Contexts.User
 
   setup do
-#    Mai.Fixtures.seed_data()
+    #    Mai.Fixtures.seed_data()
     :ok
   end
 
