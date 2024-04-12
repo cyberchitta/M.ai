@@ -1,7 +1,7 @@
 <div
   class="w-full text-token-text-primary"
   dir="auto"
-  data-testid={"conversation-turn-#{@turn_number}"}
+  data-testid={"conversation-turn-#{@message.turn_number}"}
   style="--avatar-color: #19c37d;"
 >
   <div class="px-4 py-2 justify-center text-base md:gap-6 m-auto">
@@ -15,24 +15,24 @@
           decoding="async"
           data-nimg="1"
           class="rounded-sm"
-          src={"images/#{if @role == "assistant", do: "mai-avatar.png", else: "user.png"}"}
+          src={"/images/#{if @message.role == "assistant", do: "mai-avatar.png", else: "user.png"}"}
           style="color: transparent;"
         />
       </div>
-      <div class={"relative flex w-full flex-col#{if @role == "assistant", do: " agent-turn", else: ""}"}>
+      <div class={"relative flex w-full flex-col#{if @message.role == "assistant", do: " agent-turn", else: ""}"}>
         <div class="font-semibold select-none">
-          <%= if @role == "assistant", do: "M.ai", else: "You" %>
+          <%= if @message.role == "assistant", do: "M.ai", else: "You" %>
         </div>
         <div class="flex-col gap-1 md:gap-3">
           <div class="flex flex-grow flex-col max-w-full">
             <div
-              data-message-author-role={"#{@role}"}
-              data-message-id={"#{@message_id}"}
+              data-message-author-role={"#{@message.role}"}
+              data-message-id={"#{@message.id}"}
               dir="auto"
               class="min-h-[20px] text-message flex flex-col items-start gap-3 whitespace-pre-wrap break-words [.text-message+&amp;]:mt-5 overflow-x-auto"
             >
-              <div class={"#{ if @role == "assistant", do: "markdown prose w-full break-words dark:prose-invert dark", else: "" }"}>
-                <%= @message_content %>
+              <div class={"#{ if @message.role == "assistant", do: "markdown prose w-full break-words dark:prose-invert dark", else: "" }"}>
+                <%= @message.content %>
               </div>
             </div>
           </div>

@@ -3,11 +3,11 @@
   <div role="presentation" tabindex="0" class="flex h-full flex-col">
     <div class="flex-1 overflow-hidden">
       <div class="relative h-full">
-        <.header start={@start} />
-        <%= if @start do %>
-          <.hello />
+        <.header main={@main} />
+        <%= if @main.chat do %>
+            <.messages messages={@main.chat.messages}/>
         <% else %>
-          <.messages />
+          <.hello />
         <% end %>
       </div>
     </div>
@@ -17,10 +17,8 @@
         class="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl"
       >
         <div class="relative flex h-full flex-1 flex-col">
-          <%= if @start do %>
-            <.suggestions suggestions={@start.suggestions} />
-          <% else %>
-            <.messages />
+          <%= unless @main.chat do %>
+            <.suggestions suggestions={@main.suggestions} />
           <% end %>
           <div class="flex w-full items-center">
             <div class="overflow-hidden [&amp;:has(textarea:focus)]:border-token-border-xheavy [&amp;:has(textarea:focus)]:shadow-[0_2px_6px_rgba(0,0,0,.05)] flex flex-col w-full flex-grow relative border dark:text-white rounded-2xl bg-token-main-surface-primary border-token-border-medium">

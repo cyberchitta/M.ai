@@ -6,6 +6,7 @@ defmodule Mai.Schemas.Message do
   schema "messages" do
     field(:content, :string)
     field(:role, :string)
+    field(:turn_number, :integer)
 
     belongs_to(:chat, Mai.Schemas.Chat, foreign_key: :chat_id, type: Ecto.UUID)
 
@@ -19,9 +20,9 @@ defmodule Mai.Schemas.Message do
 
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:content, :role, :chat_id, :original_message_id])
-    |> validate_required([:content, :role, :chat_id])
-    |> validate_inclusion(:role, ["request", "response"])
+    |> cast(attrs, [:content, :role, :chat_id, :turn_number, :original_message_id])
+    |> validate_required([:content, :role, :chat_id, :turn_number])
+    |> validate_inclusion(:role, ["assistant", "user"])
     |> assoc_constraint(:chat)
     |> assoc_constraint(:original_message)
   end

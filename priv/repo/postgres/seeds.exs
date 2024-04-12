@@ -17,8 +17,9 @@ create_user_data = fn user_attrs ->
     Enum.each(1..Enum.random(3..5), fn order ->
       message_attrs = %{
         content: "Message #{order} for Chat #{chat.id}",
-        role: if(rem(order, 2) == 0, do: "response", else: "request"),
-        chat_id: chat.id
+        role: if(rem(order, 2) == 0, do: "assistant", else: "user"),
+        chat_id: chat.id,
+        turn_number: order
       }
       %Message{}
       |> Message.changeset(message_attrs)
