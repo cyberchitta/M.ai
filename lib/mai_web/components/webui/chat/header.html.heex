@@ -11,10 +11,14 @@
         data-state="open"
         aria-controls="radix-:rnm:"
       >
-        <div>Mai <span class="text-token-text-secondary"></span></div>
+        <div>Mai <span class="text-token-text-secondary">2.0</span></div>
         <.icon name="hero-chevron-down" class="w6, h6" />
       </div>
     </div>
-    <div class="flex gap-2 pr-1"></div>
+    <div class="flex gap-2 pr-1">
+      <%= unless @start do %>
+        <.share />
+      <% end %>
+    </div>
   </div>
 </div>

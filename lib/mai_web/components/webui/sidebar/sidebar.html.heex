@@ -10,7 +10,6 @@
             Chat history
           </h2>
           <nav class="flex h-full w-full flex-col px-3 pb-3.5" aria-label="Chat history">
-            <.chat_history_toggle />
             <div class="flex-col flex-1 transition-opacity duration-500 -mr-2 pr-2 overflow-y-auto">
               <div class="sticky left-0 right-0 top-0 z-20 pt-3.5">
                 <%= for chat <- @chats do %>
@@ -28,9 +27,11 @@
                     href="/gpts"
                   >
                     <div class="flex h-7 w-7 items-center justify-center text-token-text-secondary">
-                      <!-- HeroIcon: cube -->
+                      <.icon name="hero-cube" class="w6, h6" />
                     </div>
-                    <span class="text-sm">Explore GPTs</span>
+                    <div class="grow overflow-hidden text-ellipsis whitespace-nowrap text-sm text-token-text-primary">
+                      New chat
+                    </div>
                   </a>
                 </div>
               </div>

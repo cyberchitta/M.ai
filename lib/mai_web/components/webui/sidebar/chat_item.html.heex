@@ -3,16 +3,13 @@
     navigate={~p"/chats/#{@chat.id}"}
     class="group flex h-10 items-center gap-2 rounded-lg bg-token-sidebar-surface-primary px-2 font-medium hover:bg-token-sidebar-surface-secondary"
   >
-    <div class="h-7 w-7 flex-shrink-0">
-      <!-- Chat item icon -->
-    </div>
     <div class="grow overflow-hidden text-ellipsis whitespace-nowrap text-sm text-token-text-primary">
       <%= @chat.title %>
     </div>
     <div class="flex gap-3">
       <span class="flex items-center" data-state="closed">
         <button class="invisible text-token-text-tertiary hover:text-token-text-secondary group-hover:visible">
-          <!-- HeroIcon: pencil -->
+          <.icon name="hero-pencil" class="w6, h6" />
         </button>
       </span>
     </div>

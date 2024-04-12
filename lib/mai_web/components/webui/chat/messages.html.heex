@@ -1,0 +1,3 @@
+<%= for {suggestion, index} <- Enum.with_index(@suggestions) do %>
+  <.message title={suggestion.title} description={suggestion.description} index={index} />
+<% end %>
