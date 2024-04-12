@@ -13,9 +13,9 @@ defmodule MaiWeb.Router do
   scope "/", MaiWeb do
     pipe_through :browser
 
-    get "/", PageController, :chat
+    get "/", ChatsController, :index
 
-    resources "/chats", PageController, only: [:show]
+    resources "/chats", ChatsController, only: [:show]
   end
 
   # Other scopes may use custom stacks.
