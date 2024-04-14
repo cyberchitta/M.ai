@@ -5,7 +5,7 @@
       <div class="relative h-full">
         <.header main={@main} />
         <%= if @main.chat do %>
-            <.messages messages={@main.chat.messages}/>
+          <.messages messages={@main.chat.messages} />
         <% else %>
           <.hello />
         <% end %>
