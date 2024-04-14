@@ -1,0 +1,35 @@
+<%= if @message.role == "assistant" do %>
+  <div class="mt-1 flex gap-3 empty:hidden">
+    <div class="text-gray-400 flex self-end lg:self-center items-center justify-center lg:justify-start mt-0 -ml-1 h-7 gap-[2px] visible">
+      <span class="" data-state="closed">
+        <button class="flex items-center gap-1.5 rounded-md p-1 text-xs text-token-text-tertiary hover:text-token-text-primary md:invisible md:group-hover:visible md:group-[.final-completion]:visible">
+          <.icon name="hero-clipboard" class="w4, h4" />
+        </button>
+      </span>
+      <span class="" data-state="closed">
+        <button class="p-1 rounded-md text-token-text-tertiary hover:text-token-text-primary md:invisible md:group-hover:visible md:group-[.final-completion]:visible">
+          <div class="flex items-center gap-1.5 text-xs">
+            <.icon name="hero-hand-thumb-up" class="w4, h4" />
+          </div>
+        </button>
+      </span>
+      <div class="flex">
+        <span class="" data-state="closed">
+          <button class="p-1 rounded-md text-token-text-tertiary hover:text-token-text-primary md:invisible md:group-hover:visible md:group-[.final-completion]:visible">
+            <.icon name="hero-hand-thumb-down" class="w4, h4" />
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="mt-1 flex gap-3 empty:hidden juice:justify-end">
+    <div class="text-gray-400 flex self-end lg:self-center items-center justify-center lg:justify-start mt-0 -ml-1 h-7 gap-[2px] visible">
+      <button class="p-1 rounded-md text-token-text-tertiary hover:text-token-text-primary md:invisible md:group-hover:visible md:group-[.final-completion]:visible">
+        <div class="flex items-center gap-1.5 text-xs">
+          <.icon name="hero-pencil" class="w4, h4" />
+        </div>
+      </button>
+    </div>
+  </div>
+<% end %>

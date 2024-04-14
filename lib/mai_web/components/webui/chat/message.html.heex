@@ -8,7 +8,8 @@
     <div class="flex flex-1 text-base mx-auto gap-3 juice:gap-4 juice:md:gap-6 md:px-5 lg:px-1 xl:px-5 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] group">
       <div class="flex-shrink-0 flex flex-col relative items-end">
         <img
-          alt="User"
+          alt={"#{if @message.role == "assistant", do: "M.ai", else: "User"}"}
+          ,
           loading="lazy"
           width="24"
           height="24"
@@ -36,6 +37,7 @@
               </div>
             </div>
           </div>
+          <.msg-controls message={@message} />
         </div>
       </div>
     </div>

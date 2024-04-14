@@ -9,8 +9,7 @@ defmodule Mai.Contexts.Chat do
       Mai.RepoPostgres.all(
         from(m in Mai.Schemas.Message,
           where: m.chat_id == ^chat_id,
-          order_by: [asc: m.inserted_at],
-          select: %{id: m.id, role: m.role, content: m.content, inserted_at: m.inserted_at}
+          order_by: [asc: m.inserted_at]
         )
       )
 
