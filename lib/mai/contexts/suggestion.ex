@@ -1,5 +1,5 @@
-defmodule MaiWeb.UiState.Suggestions do
-  def create_fixture() do
+defmodule Mai.Contexts.Suggestion do
+  def get_default() do
     [
       %{
         title: "Write a message",
