@@ -1,6 +1,6 @@
 <div
   class="flex-shrink-0 overflow-x-hidden bg-token-sidebar-surface-primary"
-  style="width: 260px; visibility: visible;"
+  style="width: 260px;"
 >
   <div class="h-full w-[260px]">
     <div class="flex h-full min-h-0 flex-col">
@@ -10,43 +10,45 @@
             Chat history
           </h2>
           <nav class="flex h-full w-full flex-col px-3 pb-3.5" aria-label="Chat history">
-            <div class="flex-col flex-1 transition-opacity duration-500 -mr-2 pr-2 overflow-y-auto">
-              <div class="sticky left-0 right-0 top-0 z-20 pt-3.5">
-                <%= for chat <- @chats do %>
-                  <.chat_item chat={chat} />
-                <% end %>
-              </div>
-              <div>
-                <%= for chat <- @chats do %>
-                  <.chat_item chat={chat} />
-                <% end %>
-                <div class="my-2 ml-2 h-px w-7 bg-token-sidebar-surface-tertiary"></div>
-                <div tabindex="0">
-                  <a
-                    class="flex h-10 w-full items-center gap-2 rounded-lg px-2 font-medium text-token-text-primary hover:bg-token-sidebar-surface-secondary"
-                    href="/gpts"
-                  >
-                    <div class="flex h-7 w-7 items-center justify-center text-token-text-secondary">
-                      <.icon name="hero-cube" class="w6, h6" />
-                    </div>
-                    <div class="grow overflow-hidden text-ellipsis whitespace-nowrap text-sm text-token-text-primary">
-                      New chat
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <%= for time_period <- @time_periods do %>
-                <.chat_history_time_period time_period={time_period} />
-              <% end %>
-            </div>
-            <div class="flex flex-col pt-2 empty:hidden dark:border-white/20">
-              <div class="flex w-full items-center">
-                <div class="max-w-[100%] grow">
-                  <.user_menu user={@current_user} />
-                </div>
-              </div>
-            </div>
+            <!-- removed hidden "clear chat" section -->
+            <.chat_history periods={@periods} />
           </nav>
+        </div>
+      </div>
+      <div class="flex w-full items-center juice:md:hidden">
+        <div class="max-w-[100%] grow">
+          <div class="group relative" data-headlessui-state="">
+            <button
+              class="flex w-full max-w-[100%] items-center gap-2 rounded-lg p-2 text-sm  hover:bg-token-sidebar-surface-secondary group-ui-open:bg-token-sidebar-surface-secondary"
+              id="headlessui-menu-button-:rb:"
+              type="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-headlessui-state=""
+            >
+              <div class="flex-shrink-0">
+                <div class="flex items-center justify-center overflow-hidden rounded-full">
+                  <div class="relative flex">
+                    <img
+                      alt="User"
+                      referrerpolicy="no-referrer"
+                      loading="lazy"
+                      width="32"
+                      height="32"
+                      decoding="async"
+                      data-nimg="1"
+                      class="rounded-sm"
+                      src={"#{@user.avatar_url}"}
+                      style="color: transparent;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="relative -top-px grow -space-y-px truncate text-left text-token-text-primary">
+                <div><%= @user.name %></div>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
