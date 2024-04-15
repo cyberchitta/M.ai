@@ -15,9 +15,11 @@
           </nav>
         </div>
       </div>
-      <div class="flex w-full items-center juice:md:hidden">
-        <div class="max-w-[100%] grow">
-          <.user user={@user} />
+      <div class="flex flex-col pt-2 empty:hidden dark:border-white/20">
+        <div class="flex w-full items-center juice:md:hidden">
+          <div class="max-w-[100%] grow">
+            <.user user={@user} />
+          </div>
         </div>
       </div>
     </div>
