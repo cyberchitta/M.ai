@@ -2,7 +2,7 @@ defmodule MaiWeb.UiState.Index do
   alias Mai.Contexts.Chat
   alias Mai.Contexts.User
 
-  def get_index(user_id) do
+  def get(user_id) do
     user = User.get_by_id(user_id)
     periods = Chat.list_chats_by_period(user_id)
 
@@ -15,9 +15,9 @@ defmodule MaiWeb.UiState.Index do
     }
   end
 
-  def get_index(user_id, chat_id) do
+  def get(user_id, chat_id) do
     chat = Mai.Contexts.Chat.get_chat_details(chat_id)
-    index = get_index(user_id)
+    index = get(user_id)
     %{index | main: Map.put(index.main, :chat, chat)}
   end
 end
