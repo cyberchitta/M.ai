@@ -1,6 +1,11 @@
 defmodule MaiWeb.PageControllerTest do
   use MaiWeb.ConnCase
 
+  setup tags do
+    Mai.DataCase.setup_sandbox(tags)
+    :ok
+  end
+
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
 
