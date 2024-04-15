@@ -21,7 +21,6 @@ defmodule MaiWeb.Telemetry do
 
   def metrics do
     [
-      # Phoenix Metrics
       summary("phoenix.endpoint.start.system_time",
         unit: {:native, :millisecond}
       ),
@@ -50,8 +49,6 @@ defmodule MaiWeb.Telemetry do
         tags: [:event],
         unit: {:native, :millisecond}
       ),
-
-      # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total"),
       summary("vm.total_run_queue_lengths.cpu"),
