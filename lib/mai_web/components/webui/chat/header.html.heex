@@ -12,13 +12,17 @@
         aria-controls="radix-:rnm:"
       >
         <div>Mai <span class="text-token-text-secondary">2.0</span></div>
-        <!-- <.icon name="hero-chevron-down" class="w6 h6" /> -->
+        <!-- <.icon name="hero-chevron-down" class="w-6 h-6" /> -->
       </div>
     </div>
-    <div class="flex gap-2 pr-1">
-      <%= if get_in(@main, [:chat]) do %>
-        <.share />
-      <% end %>
-    </div>
+    <%= if get_in(@main, [:chat]) do %>
+      <div class="flex gap-2 pr-1">
+        <button class="btn relative btn-neutral btn-small flex h-9 w-9 items-center justify-center whitespace-nowrap rounded-lg">
+          <div class="flex w-full gap-2 items-center justify-center">
+            <.icon name="hero-share" class="w-6 h-6" />
+          </div>
+        </button>
+      </div>
+    <% end %>
   </div>
 </div>
