@@ -22,12 +22,6 @@ defmodule Mai.DataCase do
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
   end
 
-  def setup_test_data do
-    #    Code.require_file("priv/repo/postgres/seeds.exs")
-    Mai.Fixtures.seed_data()
-    :ok
-  end
-
   def errors_on(changeset) do
     Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
       Regex.replace(~r"%{(\w+)}", message, fn _, key ->
