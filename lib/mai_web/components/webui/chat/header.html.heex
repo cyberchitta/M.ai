@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="flex gap-2 pr-1">
-      <%= if @main.chat do %>
+      <%= if get_in(@main, [:chat]) do %>
         <.share />
       <% end %>
     </div>

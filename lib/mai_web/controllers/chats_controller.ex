@@ -5,11 +5,13 @@ defmodule MaiWeb.ChatsController do
 
   plug :put_view, html: MaiWeb.Components.Webui
 
+  @user_id "a4b22541-b2a5-46bf-b451-09c6d0c1d6f0"
+
   def index(conn, _params) do
-    render(conn, :index, UiState.Index.create_fixture())
+    render(conn, :index, UiState.Index.get_index(@user_id))
   end
 
-  def show(conn, %{"id" => id}) do
-    render(conn, :index, UiState.Index.create_fixture())
+  def show(conn, %{"id" => chat_id}) do
+    render(conn, :index, UiState.Index.get_index(@user_id, chat_id))
   end
 end

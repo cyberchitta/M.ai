@@ -4,7 +4,7 @@
     <div class="flex-1 overflow-hidden">
       <div class="relative h-full">
         <.header main={@main} />
-        <%= if @main.chat do %>
+        <%= if get_in(@main, [:chat]) do %>
           <.messages messages={@main.chat.messages} />
         <% else %>
           <.hello />
@@ -17,7 +17,7 @@
         class="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl"
       >
         <div class="relative flex h-full flex-1 flex-col">
-          <%= unless @main.chat do %>
+          <%= unless get_in(@main, [:chat]) do %>
             <.suggestions suggestions={@main.suggestions} />
           <% end %>
           <div class="flex w-full items-center">
