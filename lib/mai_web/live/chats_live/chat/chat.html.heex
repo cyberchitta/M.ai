@@ -3,7 +3,9 @@
   <div role="presentation" tabindex="0" class="flex h-full flex-col">
     <div class="flex-1 overflow-hidden">
       <div class="relative h-full">
+        <!--
         <.header main={@main} />
+        -->
         <%= if get_in(@main, [:chat]) do %>
           <.messages messages={@main.chat.messages} />
         <% else %>
