@@ -34,7 +34,7 @@
                 class="min-h-[20px] text-message flex flex-col items-start gap-3 whitespace-pre-wrap break-words [.text-message+&amp;]:mt-5 overflow-x-auto"
               >
                 <div class={"#{ if message.role == "assistant", do: "markdown prose w-full break-words dark:prose-invert dark", else: "" }"}>
-                  <%= @message.content %>
+                  <%= message.content %>
                 </div>
               </div>
             </div>
