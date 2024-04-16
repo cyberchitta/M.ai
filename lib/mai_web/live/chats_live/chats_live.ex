@@ -6,16 +6,16 @@ defmodule MaiWeb.ChatsLive do
   alias Mai.Schemas.Message
   alias Mai.RepoPostgres
 
-  alias MaiWeb.UiState.Index
+  alias MaiWeb.UiState
 
   @user_id "a4b22541-b2a5-46bf-b451-09c6d0c1d6f0"
 
   def mount(%{"id" => chat_id}, _session, socket) do
-    {:ok, assign(socket, Index.get(@user_id, chat_id))}
+    {:ok, assign(socket, UiState.get_index(@user_id, chat_id))}
   end
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, Index.get(@user_id))}
+    {:ok, assign(socket, UiState.get_index(@user_id))}
   end
 
   def handle_event(
