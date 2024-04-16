@@ -10,7 +10,6 @@ defmodule MaiWeb.ChatsLive do
 
   @user_id "a4b22541-b2a5-46bf-b451-09c6d0c1d6f0"
 
-
   def mount(%{"id" => chat_id}, _session, socket) do
     {:ok, assign(socket, Index.get(@user_id, chat_id))}
   end
