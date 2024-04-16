@@ -12,8 +12,8 @@ defmodule MaiWeb.Router do
 
   scope "/", MaiWeb do
     pipe_through :browser
-    get "/", ChatsController, :index
-    resources "/chats", ChatsController, only: [:show]
+    live "/", ChatsLive, :index
+    live "/chats/:id", ChatsLive, :show
   end
 
   if Application.compile_env(:mai, :dev_routes) do
