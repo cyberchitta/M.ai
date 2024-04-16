@@ -12,7 +12,7 @@ defmodule MaiWeb.UiState do
   end
 
   defp sidebar(user_id) do
-    %{periods: Chat.list_chats_by_period(user_id), user: User.get_by_id(user_id)}
+    %{periods: Chat.list_by_period(user_id), user: User.get_by_id(user_id)}
   end
 
   defp suggestions() do

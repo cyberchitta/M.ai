@@ -16,7 +16,7 @@ defmodule Mai.Contexts.Chat do
     %{chat: chat, messages: messages}
   end
 
-  def list_chats_by_period(user_id) do
+  def list_by_period(user_id) do
     from(c in Mai.Schemas.Chat,
       where: c.user_id == ^user_id,
       order_by: [desc: c.inserted_at],
