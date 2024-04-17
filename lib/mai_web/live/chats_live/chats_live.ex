@@ -16,21 +16,18 @@ defmodule MaiWeb.ChatsLive do
     {:ok, assign(socket, UiState.index(@user_id))}
   end
 
-  def handle_event(
-        "submit",
-        %{"_target" => ["prompt-textarea"], "prompt-textarea" => prompt},
-        socket
-      ) do
+  def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
     main = socket.assigns.main
 
     chat_id = main.chat.id
-    turn_number = length(main.chat.messages) + 1
+    turn_number = length(main.messages) + 1
 
     streaming = %{
-      user: Message.user(chat_id, turn_number, prompt),
-      assistant: Message.assistant(chat_id, turn_number + 1, "")
+      user: Message.user(chat_id, turn_number, prompt) |> Map.put(:id, nil),
+      assistant: Message.assistant(chat_id, turn_number + 1, "")|> Map.put(:id, nil)
     }
 
+    IO.inspect(streaming, label: "Start Streaming")
     {:noreply, assign(socket, main: %{main | uistate: %{prompt: "", streaming: streaming}})}
     send(self(), {:stream_response, streaming})
     {:noreply, socket}
@@ -39,6 +36,7 @@ defmodule MaiWeb.ChatsLive do
   def handle_info({:stream_response, streaming}, socket) do
     # Call the chat API to stream the response
     # Update the streaming.assistant_message with the partial response
+    IO.inspect(streaming, label: "Streaming")
 
     main = socket.assigns.main
     {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: streaming}})}
@@ -48,8 +46,11 @@ defmodule MaiWeb.ChatsLive do
     streaming.user |> Message.insert!()
     streaming.assistant |> Message.insert!()
 
-    main = socket.assigns.main
-    {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: nil}})}
+    IO.inspect(streaming, label: "Complete Streaming")
+
+    _main = socket.assigns.main
+    ##    {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: nil}})}
+    {:noreply, socket}
   end
 
   def handle_info(%{event: "cancel_response"}, socket) do

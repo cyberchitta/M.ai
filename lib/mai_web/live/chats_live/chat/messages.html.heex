@@ -1,8 +1,7 @@
 <%= for message <- @messages do %>
-  <.message message={message} is_streamed={false}/>
+  <.message message={message} is_streamed={false} />
 <% end %>
-
 <%= if @uistate.streaming do %>
-  <.message message={@uistate.streaming.user} is_streamed={false}/>
+  <.message message={@uistate.streaming.user} is_streamed={false} />
   <.message message={@uistate.streaming.assistant} is_streamed={true} />
 <% end %>
