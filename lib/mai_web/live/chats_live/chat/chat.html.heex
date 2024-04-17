@@ -7,7 +7,7 @@
         <.header main={@main} />
         -->
         <%= if get_in(@main, [:chat]) do %>
-          <.messages messages={@main.chat.messages} />
+          <.messages messages={@main.chat.messages} uistate={@main.uistate}/>
         <% else %>
           <.hello />
         <% end %>
