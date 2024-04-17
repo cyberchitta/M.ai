@@ -24,7 +24,7 @@ defmodule MaiWeb.ChatsLive do
 
     streaming = %{
       user: Message.user(chat_id, turn_number, prompt) |> Map.put(:id, nil),
-      assistant: Message.assistant(chat_id, turn_number + 1, "")|> Map.put(:id, nil)
+      assistant: Message.assistant(chat_id, turn_number + 1, "") |> Map.put(:id, nil)
     }
 
     IO.inspect(streaming, label: "Start Streaming")
