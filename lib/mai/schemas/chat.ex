@@ -13,8 +13,8 @@ defmodule Mai.Schemas.Chat do
     timestamps()
   end
 
-  def changeset(chat, attrs) do
-    chat
+  def changeset(attrs) do
+    %__MODULE__{}
     |> cast(attrs, [:name, :description, :user_id])
     |> validate_required([:name, :user_id])
     |> assoc_constraint(:user)
