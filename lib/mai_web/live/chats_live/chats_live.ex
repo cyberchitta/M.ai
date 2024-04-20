@@ -27,37 +27,57 @@ defmodule MaiWeb.ChatsLive do
       assistant: Message.assistant(chat_id, turn_number + 1, "") |> Map.put(:id, nil)
     }
 
-    IO.inspect(streaming, label: "Start Streaming")
+    send(self(), {:start_completion, streaming})
     {:noreply, assign(socket, main: %{main | uistate: %{prompt: "", streaming: streaming}})}
-    send(self(), {:stream_response, streaming})
-    {:noreply, socket}
   end
 
-  def handle_info({:stream_response, streaming}, socket) do
-    # Call the chat API to stream the response
-    # Update the streaming.assistant_message with the partial response
-    IO.inspect(streaming, label: "Streaming")
-
+  def handle_info({:start_completion, streaming}, socket) do
+    task = Task.async(Mai.Llm.Chat, :send_completion_request, [self(), streaming.user.content])
     main = socket.assigns.main
-    {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: streaming}})}
+
+    {:noreply,
+     assign(socket, main: %{main | uistate: %{main.uistate | streaming: streaming}}, task: task)}
   end
 
-  def handle_info(%{event: "response_complete", streaming: streaming}, socket) do
-    streaming.user |> Message.insert!()
-    streaming.assistant |> Message.insert!()
+  def handle_info({:chunk, chunk}, socket) do
+    main = socket.assigns.main
+    streaming = main.uistate.streaming
+    assistant = streaming.assistant
+    content = assistant.content
 
-    IO.inspect(streaming, label: "Complete Streaming")
+    {:noreply,
+     assign(socket,
+       main: %{
+         main
+         | uistate: %{
+             main.uistate
+             | streaming: %{streaming | assistant: %{assistant | content: content <> " " <> chunk}}
+           }
+       }
+     )}
+  end
 
-    _main = socket.assigns.main
-    ##    {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: nil}})}
+  def handle_info({_ref, :chunk_complete}, socket) do
+    IO.puts("Response Complete 1")
     {:noreply, socket}
   end
 
-  def handle_info(%{event: "cancel_response"}, socket) do
+  def handle_info(:chunk_complete, socket) do
+    IO.puts("Response Complete")
+    main = socket.assigns.main
+    {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: nil}})}
+  end
+
+  def handle_info({:cancel_response}, socket) do
     # Cancel the ongoing response stream
     # Clear any partial response from the UI
 
     main = socket.assigns.main
     {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: nil}})}
+  end
+
+  def handle_info(message, socket) do
+    IO.inspect(message, label: "Unmatched message")
+    {:noreply, socket}
   end
 end
