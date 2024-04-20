@@ -24,56 +24,37 @@ defmodule MaiWeb.ChatsLive do
 
     streaming = %{
       user: Message.user(chat_id, turn_number, prompt) |> Map.put(:id, nil),
-      assistant: Message.assistant(chat_id, turn_number + 1, "") |> Map.put(:id, nil)
+      assistant: Message.assistant(chat_id, turn_number + 1, "") |> Map.put(:id, nil),
+      task: nil
     }
 
     send(self(), {:start_completion, streaming})
-    {:noreply, assign(socket, main: %{main | uistate: %{prompt: "", streaming: streaming}})}
+    {:noreply, assign(socket, main: main |> UiState.with_streaming(streaming))}
   end
 
   def handle_info({:start_completion, streaming}, socket) do
     task = Task.async(Mai.Llm.Chat, :send_completion_request, [self(), streaming.user.content])
-    main = socket.assigns.main
-
-    {:noreply,
-     assign(socket, main: %{main | uistate: %{main.uistate | streaming: streaming}}, task: task)}
+    main = socket.assigns.main |> UiState.with_streaming(streaming |> UiState.with_task(task))
+    {:noreply, assign(socket, main: main)}
   end
 
   def handle_info({:chunk, chunk}, socket) do
     main = socket.assigns.main
-    streaming = main.uistate.streaming
-    assistant = streaming.assistant
-    content = assistant.content
-
-    {:noreply,
-     assign(socket,
-       main: %{
-         main
-         | uistate: %{
-             main.uistate
-             | streaming: %{streaming | assistant: %{assistant | content: content <> " " <> chunk}}
-           }
-       }
-     )}
-  end
-
-  def handle_info({_ref, :chunk_complete}, socket) do
-    IO.puts("Response Complete 1")
-    {:noreply, socket}
+    streaming = main.uistate.streaming |> UiState.with_chunk(chunk)
+    {:noreply, assign(socket, main: main |> UiState.with_streaming(streaming))}
   end
 
   def handle_info(:chunk_complete, socket) do
-    IO.puts("Response Complete")
     main = socket.assigns.main
-    {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: nil}})}
+    Task.shutdown(main.uistate.streaming.task)
+    {:noreply, assign(socket, main: main |> UiState.with_streaming())}
   end
 
   def handle_info({:cancel_response}, socket) do
     # Cancel the ongoing response stream
     # Clear any partial response from the UI
-
     main = socket.assigns.main
-    {:noreply, assign(socket, main: %{main | uistate: %{main.uistate | streaming: nil}})}
+    {:noreply, assign(socket, main: main |> UiState.with_streaming())}
   end
 
   def handle_info(message, socket) do

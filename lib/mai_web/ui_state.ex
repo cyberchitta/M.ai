@@ -21,4 +21,18 @@ defmodule MaiWeb.UiState do
   defp uistate(prompt) do
     %{streaming: nil, prompt: prompt}
   end
+
+  def with_streaming(main, streaming \\ nil) do
+    %{main | uistate: %{main.uistate | streaming: streaming}}
+  end
+
+  def with_task(streaming, task \\ nil) do
+    %{streaming | task: task}
+  end
+
+  def with_chunk(streaming, chunk) do
+    assistant = streaming.assistant
+    content = assistant.content
+    %{streaming | assistant: %{assistant | content: content <> " " <> chunk}}
+  end
 end
