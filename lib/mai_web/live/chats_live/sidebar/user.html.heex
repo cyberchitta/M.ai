@@ -1,7 +1,7 @@
 <%= if @user do %>
   <div class="group relative" data-headlessui-state="">
     <button
-      class="flex w-full max-w-[100%] items-center gap-2 rounded-lg p-2 text-sm  hover:bg-token-sidebar-surface-secondary group-ui-open:bg-token-sidebar-surface-secondary"
+      class="flex w-full max-w-full items-center gap-2 rounded-lg p-2 text-sm hover:bg-base-300 ui-open:bg-base-300"
       id="headlessui-menu-button-:rb:"
       type="button"
       aria-haspopup="true"
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="relative -top-px grow -space-y-px truncate text-left text-token-text-primary">
+      <div class="relative -top-px grow -space-y-px truncate text-left">
         <div><%= @user.name %></div>
       </div>
     </button>
