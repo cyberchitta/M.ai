@@ -1,13 +1,13 @@
 <form
   phx-submit="submit"
-  class="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl"
+  class="flex flex-row gap-3 mx-2 md:mx-4 lg:mx-auto lg:max-w-2xl xl:max-w-3xl"
 >
   <div class="relative flex h-full flex-1 flex-col">
     <%= unless get_in(@main, [:chat]) do %>
       <.suggestions suggestions={@main.suggestions} />
     <% end %>
     <div class="flex w-full items-center">
-      <div class="overflow-hidden [&amp;:has(textarea:focus)]:border-token-border-xheavy [&amp;:has(textarea:focus)]:shadow-[0_2px_6px_rgba(0,0,0,.05)] flex flex-col w-full flex-grow relative border dark:text-white rounded-2xl bg-token-main-surface-primary border-token-border-medium">
+      <div class="overflow-hidden flex flex-col w-full flex-grow relative border border-base-300 rounded-2xl bg-base-100">
         <textarea
           id="prompt-textarea"
           name="prompt-textarea"
@@ -15,18 +15,13 @@
           data-id="root"
           rows="1"
           placeholder="Message M.ai…"
-          class="m-0 w-full resize-none border-0 bg-transparent focus:ring-0 focus-visible:ring-0 dark:bg-transparent py-[10px] pr-10 md:py-3.5 md:pr-12 max-h-[25dvh] max-h-52 placeholder-black/50 dark:placeholder-white/50 pl-10 md:pl-[55px]"
+          class="m-0 w-full resize-none border-0 bg-transparent focus:ring-0 focus-visible:ring-0 dark:bg-transparent py-2.5 pr-10 md:py-3.5 md:pr-12 max-h-52 placeholder-base-content/50 dark:placeholder-base-content/50 pl-10 md:pl-14"
           style="height: 52px; overflow-y: hidden;"
         ><%= get_in(@main, [:uistate, :prompt]) %></textarea>
         <!--
         <div class="absolute bottom-2 md:bottom-3 left-2 md:left-4">
           <div class="flex">
-            <button
-              id="mi-attach-files"
-              class="btn relative p-0 text-black dark:text-white"
-              aria-label="Attach files"
-              phx-hook="AttachFiles"
-            >
+            <button id="mi-attach-files" class="btn relative p-0" aria-label="Attach files" phx-hook="AttachFiles">
               <div class="flex w-full gap-2 items-center justify-center">
                 <.icon name="hero-paperclip" class="w-6 h-6" />
               </div>
@@ -37,10 +32,10 @@
         -->
         <button
           type="submit"
-          class="absolute bottom-1.5 right-2 rounded-lg border border-black bg-black p-0.5 text-white transition-colors enabled:bg-black disabled:text-gray-400 disabled:opacity-10 dark:border-white dark:bg-white dark:hover:bg-white md:bottom-3 md:right-3"
+          class="absolute bottom-1.5 right-2 rounded-lg border border-base-content bg-base-content p-0.5 text-base-100 transition-colors enabled:bg-base-content disabled:opacity-50 md:bottom-3 md:right-3"
           data-testid="send-button"
         >
-          <span class="" data-state="closed">
+          <span data-state="closed">
             <.icon name="hero-arrow-up" class="w-6 h-6" />
           </span>
         </button>

@@ -1,149 +1,40 @@
-<!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
+<html lang="en" data-theme="rosepine">
   <head>
-    <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="https://cdn.oaistatic.com/_next/static/media/apple-touch-icon.59f2e898.png"
-    /><link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="https://cdn.oaistatic.com/_next/static/media/favicon-32x32.be48395e.png"
-    /><link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="https://cdn.oaistatic.com/_next/static/media/favicon-16x16.9b8dbb69.png"
-    /><link rel="preconnect" href="https://cdn.oaistatic.com" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · Phoenix Framework">
-      <%= assigns[:page_title] || "Mai" %>
-    </.live_title>
+    <.live_title suffix=" · Phoenix Framework"><%= assigns[:page_title] || "Mai" %></.live_title>
     <meta
       name="keywords"
       content="ai chat,ai,chap gpt,chat gbt,chat gpt 3,chat gpt login,chat gpt website,chat gpt,chat gtp,chat openai,chat,chatai,chatbot gpt,chatg,chatgpt login,chatgpt,gpt chat,open ai,openai chat,openai chatgpt,openai"
-    /><meta name="robots" content="index, follow" /><meta
-      http-equiv="Content-Type"
-      content="text/html; charset=utf-8"
     />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta
       name="title"
       content="ChatGPT: Get instant answers, find inspiration, learn something new"
-    /><meta
+    />
+    <meta
       name="description"
       content="ChatGPT is a free-to-use AI system. Use it for engaging conversations, gain insights, automate tasks, and witness the future of AI, all in one place."
-    /><meta
+    />
+    <meta
       property="og:description"
       content="A conversational AI system that listens, learns, and challenges"
-    /><meta property="og:title" content="ChatGPT" /><meta
-      property="og:image"
-      content="https://cdn.oaistatic.com/_next/static/media/chatgpt-share-og.49cbbffe.png"
-    /><meta property="og:url" content="https://chat.openai.com" /><meta
-      name="next-head-count"
-      content="17"
-    /><link
-      rel="preload"
-      href="https://cdn.oaistatic.com/_next/static/media/soehne-buch.13189857.woff2"
-      as="font"
-      crossorigin=""
-    /><link
-      rel="preload"
-      href="https://cdn.oaistatic.com/_next/static/media/soehne-halbfett.977f1845.woff2"
-      as="font"
-      crossorigin=""
-    /><link
-      rel="preload"
-      href="https://cdn.oaistatic.com/_next/static/media/soehne-kraftig.204b461c.woff2"
-      as="font"
-      crossorigin=""
     />
-    <link
-      rel="preload"
-      href="https://cdn.oaistatic.com/_next/static/css/699471f6119990bb.css?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      as="style"
-      crossorigin="anonymous"
-    />
+    <meta property="og:title" content="ChatGPT" />
+    <meta property="og:url" content="https://chat.openai.com" />
+    <meta name="next-head-count" content="17" />
     <link
       rel="stylesheet"
-      href="https://cdn.oaistatic.com/_next/static/css/699471f6119990bb.css?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      crossorigin="anonymous"
-      data-n-g=""
-    /><noscript data-n-css=""></noscript>
-    <script type="text/javascript" async="" src="https://widget.intercom.io/widget/dgkjq2bp">
-    </script>
-    <script
-      defer=""
-      crossorigin="anonymous"
-      nomodule=""
-      src="https://cdn.oaistatic.com/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/chunks/webpack-a83839f80633c356.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/chunks/framework-d69d7cd8328ac368.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/chunks/vendor-4cb082c626a8af6f.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/chunks/main-e7f84069c815d1a0.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/chunks/pages/_app-23c0f67503b7ae2c.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/chunks/pages/%5B%5B...default%5D%5D-ecd7880591b3516f.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/JnfWxLfdK3GGfb1KM9coU/_buildManifest.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <script
-      src="https://cdn.oaistatic.com/_next/static/JnfWxLfdK3GGfb1KM9coU/_ssgManifest.js?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      defer=""
-      crossorigin="anonymous"
-    >
-    </script>
-    <meta name="react-scroll-to-bottom:version" content="4.2.0" />
-    <link
-      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css"
       type="text/css"
-      href="https://cdn.oaistatic.com/_next/static/css/b2b5486bcec590b9.css?dpl=46b7f37021d2244b5b4454b927e0735229de5626"
-      crossorigin="anonymous"
     />
-    <style data-emotion="react-scroll-to-bottom--css-djypr" data-s="">
-    </style>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="antialiased">
-    <script>
-      !function(){try{var d=document.documentElement,c=d.classList;c.remove('light','dark');var e=localStorage.getItem('theme');if('system'===e||(!e&&true)){var t='(prefers-color-scheme: dark)',m=window.matchMedia(t);if(m.media!==t||m.matches){d.style.colorScheme = 'dark';c.add('dark')}else{d.style.colorScheme = 'light';c.add('light')}}else if(e){c.add(e|| '')}if(e==='light'||e==='dark')d.style.colorScheme=e}catch(e){}}()
-    </script>
+  <body>
     <%= @inner_content %>
   </body>
 </html>

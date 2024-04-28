@@ -1,9 +1,9 @@
 <div class="absolute left-0 right-0">
-  <div class="sticky top-0 mb-1.5 flex items-center justify-between z-10 h-14 p-2 font-semibold bg-token-main-surface-primary">
+  <div class="sticky top-0 mb-1.5 flex items-center justify-between z-10 h-14 p-2 font-semibold bg-base-100">
     <div class="absolute left-1/2 -translate-x-1/2"></div>
     <div class="flex items-center gap-2">
       <div
-        class="group flex cursor-pointer items-center gap-1 rounded-xl py-2 px-3 text-lg font-medium hover:bg-token-main-surface-secondary radix-state-open:bg-token-main-surface-secondary"
+        class="group flex cursor-pointer items-center gap-1 rounded-xl py-2 px-3 text-lg font-medium hover:bg-base-200 radix-state-open:bg-base-200"
         type="button"
         id="radix-:rnl:"
         aria-haspopup="menu"
@@ -11,13 +11,13 @@
         data-state="open"
         aria-controls="radix-:rnm:"
       >
-        <div>Mai <span class="text-token-text-secondary">2.0</span></div>
+        <div>Mai <span class="text-base-content/70">2.0</span></div>
         <!-- <.icon name="hero-chevron-down" class="w-6 h-6" /> -->
       </div>
     </div>
     <%= if get_in(@main, [:chat]) do %>
       <div class="flex gap-2 pr-1">
-        <button class="btn relative btn-neutral btn-small flex h-9 w-9 items-center justify-center whitespace-nowrap rounded-lg">
+        <button class="btn btn-ghost btn-sm flex h-9 w-9 items-center justify-center whitespace-nowrap rounded-lg">
           <div class="flex w-full gap-2 items-center justify-center">
             <.icon name="hero-share" class="w-6 h-6" />
           </div>
