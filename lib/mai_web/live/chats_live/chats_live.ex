@@ -32,6 +32,18 @@ defmodule MaiWeb.ChatsLive do
     {:noreply, assign(socket, main: main |> UiState.with_streaming(streaming))}
   end
 
+  def handle_event("cancel", _, socket) do
+    main = socket.assigns.main
+    streaming = main.uistate.streaming
+
+    if streaming do
+      Process.exit(streaming.task.pid, :normal)
+      {:noreply, assign(socket, main: main |> UiState.with_streaming())}
+    else
+      {:noreply, socket}
+    end
+  end
+
   def handle_info({:start_completion, streaming}, socket) do
     task = Task.async(Mai.Llm.Chat, :send_completion_request, [self(), streaming.user.content])
     main = socket.assigns.main |> UiState.with_streaming(streaming |> UiState.with_task(task))
@@ -47,13 +59,6 @@ defmodule MaiWeb.ChatsLive do
   def handle_info(:chunk_complete, socket) do
     main = socket.assigns.main
     Task.shutdown(main.uistate.streaming.task)
-    {:noreply, assign(socket, main: main |> UiState.with_streaming())}
-  end
-
-  def handle_info({:cancel_response}, socket) do
-    # Cancel the ongoing response stream
-    # Clear any partial response from the UI
-    main = socket.assigns.main
     {:noreply, assign(socket, main: main |> UiState.with_streaming())}
   end
 
