@@ -1,20 +1,14 @@
 <div class="absolute bottom-full left-0 right-0">
-  <div class="relative h-full w-full">
-    <div>
-      <div class="h-full flex ml-1 md:w-full md:m-auto md:mb-4 gap-0 md:gap-2 justify-center">
-        <div class="grow">
-          <div class="absolute bottom-full left-0 mb-4 flex w-full grow gap-2 px-1 pb-1 sm:px-2 sm:pb-0 md:static md:mb-0 md:max-w-none">
-            <div class="grid w-full grid-flow-row grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-2">
-              <%= for {suggestion, index} <- Enum.with_index(@suggestions) do %>
-                <.suggestion
-                  title={suggestion.title}
-                  description={suggestion.description}
-                  index={index}
-                />
-              <% end %>
-            </div>
-          </div>
-        </div>
+  <div class="h-full flex ml-1 md:w-full md:m-auto md:mb-4 gap-0 md:gap-2 justify-center">
+    <div class="absolute bottom-full left-0 mb-4 flex w-full grow gap-2 px-1 pb-1 sm:px-2 sm:pb-0 md:static md:mb-0 md:max-w-none">
+      <div class="grid w-full grid-flow-row grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-2">
+        <%= for {suggestion, index} <- Enum.with_index(@suggestions) do %>
+          <.suggestion
+            title={suggestion.title}
+            description={suggestion.description}
+            index={index}
+          />
+        <% end %>
       </div>
     </div>
   </div>

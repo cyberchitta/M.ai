@@ -1,34 +1,32 @@
 <%= if @user do %>
-  <div class="group relative" data-headlessui-state="">
-    <button
-      class="flex w-full max-w-full items-center gap-2 rounded-lg p-2 text-sm hover:bg-base-300 ui-open:bg-base-300"
-      id="headlessui-menu-button-:rb:"
-      type="button"
-      aria-haspopup="true"
-      aria-expanded="false"
-      data-headlessui-state=""
-    >
-      <div class="flex-shrink-0">
-        <div class="flex items-center justify-center overflow-hidden rounded-full">
-          <div class="relative flex">
-            <img
-              alt="User"
-              referrerpolicy="no-referrer"
-              loading="lazy"
-              width="32"
-              height="32"
-              decoding="async"
-              data-nimg="1"
-              class="rounded-sm"
-              src={"#{@user.avatar_url}"}
-              style="color: transparent;"
-            />
-          </div>
+  <button
+    class="group relative flex w-full max-w-full items-center gap-2 rounded-lg p-2 text-sm hover:bg-base-300 ui-open:bg-base-300"
+    id="headlessui-menu-button-:rb:"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    data-headlessui-state=""
+  >
+    <div class="flex-shrink-0">
+      <div class="flex items-center justify-center overflow-hidden rounded-full">
+        <div class="relative flex">
+          <img
+            alt="User"
+            referrerpolicy="no-referrer"
+            loading="lazy"
+            width="32"
+            height="32"
+            decoding="async"
+            data-nimg="1"
+            class="rounded-sm"
+            src={"#{@user.avatar_url}"}
+            style="color: transparent;"
+          />
         </div>
       </div>
-      <div class="relative -top-px grow -space-y-px truncate text-left">
-        <div><%= @user.name %></div>
-      </div>
-    </button>
-  </div>
+    </div>
+    <div class="relative -top-px grow -space-y-px truncate text-left">
+      <%= @user.name %>
+    </div>
+  </button>
 <% end %>
