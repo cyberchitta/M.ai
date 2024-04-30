@@ -23,10 +23,12 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 
 import TextAreaAutosize from "./text_area_autosize";
+import ChatAutoScroll from "./chat_auto_scroll";
 
 let Hooks = {};
 
 Hooks.TextAreaAutosize = TextAreaAutosize;
+Hooks.ChatAutoScroll = ChatAutoScroll;
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
