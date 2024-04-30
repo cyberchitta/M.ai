@@ -30,6 +30,7 @@ defmodule Mai.MixProject do
       {:dotenvy, "~> 0.8.0"},
       {:earmark, "~> 1.4"},
       {:ecto_sql, "~> 3.0"},
+      {:elixir_auth_google, "~> 1.6.9"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:exandra, "~> 0.10"},
       {:floki, ">= 0.30.0", only: :test},

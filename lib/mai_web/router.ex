@@ -14,6 +14,8 @@ defmodule MaiWeb.Router do
     pipe_through :browser
     live "/", ChatsLive, :index
     live "/chats/:id", ChatsLive, :show
+    get "/auth/google/callback", GauthController, :callback
+    get "/logout", GauthController, :logout
   end
 
   if Application.compile_env(:mai, :dev_routes) do

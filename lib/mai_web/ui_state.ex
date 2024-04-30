@@ -15,7 +15,11 @@ defmodule MaiWeb.UiState do
   end
 
   defp sidebar(user_id) do
-    %{periods: Chat.list_by_period(user_id), user: User.get_by_id(user_id)}
+    unless is_nil(user_id) do
+      %{periods: Chat.list_by_period(user_id), user: User.get_by_id(user_id)}
+    else
+      %{periods: [], user: nil}
+    end
   end
 
   defp uistate(prompt) do
