@@ -25,8 +25,15 @@ defmodule Mai.Contexts.User do
     }
 
     case Mai.RepoPostgres.get_by(User, email: profile.email) do
-      nil -> u |> User.changeset() |> Mai.RepoPostgres.insert!()
-      user -> user |> Map.merge(u) |> User.changeset() |> Mai.RepoPostgres.update!()
+      nil ->
+        u |> User.changeset() |> Mai.RepoPostgres.insert!()
+
+      user ->
+        user
+        |> Map.from_struct()
+        |> Map.merge(u)
+        |> User.changeset()
+        |> Mai.RepoPostgres.update!()
     end
   end
 end

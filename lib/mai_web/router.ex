@@ -1,6 +1,8 @@
 defmodule MaiWeb.Router do
   use MaiWeb, :router
 
+  import MaiWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -12,10 +14,23 @@ defmodule MaiWeb.Router do
 
   scope "/", MaiWeb do
     pipe_through :browser
-    live "/", ChatsLive, :index
-    live "/chats/:id", ChatsLive, :show
+
     get "/auth/google/callback", GauthController, :callback
     get "/logout", GauthController, :logout
+
+    live_session :user,
+      on_mount: [{MaiWeb.UserAuth, :mount_user}] do
+      live "/", ChatsLive, :index
+    end
+  end
+
+  scope "/", MaiWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :authenticated,
+      on_mount: [{MaiWeb.UserAuth, :ensure_authenticated}] do
+      live "/chats/:id", ChatsLive, :show
+    end
   end
 
   if Application.compile_env(:mai, :dev_routes) do

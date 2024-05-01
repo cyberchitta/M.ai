@@ -6,15 +6,21 @@ defmodule MaiWeb.ChatsLive do
   alias Mai.Contexts.Message
   alias MaiWeb.UiState
 
-  @user_id "a4b22541-b2a5-46bf-b451-09c6d0c1d6f0"
+  def mount(%{"id" => chat_id}, %{"user_id" => user_id}, socket) do
+    {:ok, socket |> assign(UiState.index(user_id, chat_id)) |> enable_gauth()}
+  end
 
-  def mount(%{"id" => chat_id}, _session, socket) do
-    {:ok, assign(socket, UiState.index(@user_id, chat_id))}
+  def mount(_params, %{"user_id" => user_id}, socket) do
+    {:ok, socket |> assign(UiState.index(user_id)) |> enable_gauth()}
   end
 
   def mount(_params, _session, socket) do
+    {:ok, socket |> assign(UiState.index(nil)) |> enable_gauth()}
+  end
+
+  defp enable_gauth(socket) do
     oauth_google_url = MaiWeb.Endpoint.url() |> ElixirAuthGoogle.generate_oauth_url()
-    {:ok, socket |> assign(UiState.index(nil)) |> assign(oauth_google_url: oauth_google_url)}
+    socket |> assign(oauth_google_url: oauth_google_url)
   end
 
   def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
