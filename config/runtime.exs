@@ -39,6 +39,10 @@ config :mai, Mai.RepoPostgres,
     ),
   ssl: false
 
+config :elixir_auth_google,
+  client_id: env!("GOOGLE_CLIENT_ID"),
+  client_secret: env!("GOOGLE_CLIENT_SECRET")
+
 if config_env() == :prod do
   host = env!("PHX_HOST", :string, "example.com")
 

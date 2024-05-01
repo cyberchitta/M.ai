@@ -11,6 +11,4 @@ config :mai, Mai.RepoPostgres,
   pool_size: 10
 
 config :elixir_auth_google,
-  client_id: "631770888008-6n0oruvsm16kbkqg6u76p5cv5kfkcekt.apps.googleusercontent.com",
-  client_secret: "MHxv6-RGF5nheXnxh1b0LNDq",
   httpoison_mock: true
