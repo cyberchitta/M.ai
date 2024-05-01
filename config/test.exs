@@ -9,3 +9,6 @@ config :mai, Mai.RepoPostgres,
   database: "mai_chat_test",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
+
+config :elixir_auth_google,
+  httpoison_mock: true

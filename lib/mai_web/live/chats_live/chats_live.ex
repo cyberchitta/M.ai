@@ -13,7 +13,8 @@ defmodule MaiWeb.ChatsLive do
   end
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, UiState.index(@user_id))}
+    oauth_google_url = MaiWeb.Endpoint.url() |> ElixirAuthGoogle.generate_oauth_url()
+    {:ok, socket |> assign(UiState.index(nil)) |> assign(oauth_google_url: oauth_google_url)}
   end
 
   def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
