@@ -1,33 +1,42 @@
 defmodule Mai.Llm.Chat do
-  @example ~S"""
-    You're correct. In Elixir, there is no shorthand syntax equivalent to `Map.put/3` for adding a new key-value pair to a map.
+  alias OpenaiEx
+  alias OpenaiEx.ChatMessage
 
-    The `|` operator is specifically used for updating existing keys in a map, and it raises a `KeyError` if the key doesn't exist.
+  def send_completion_request(owner, prompt) do
+    openai = System.fetch_env!("OPENAI_API_KEY") |> OpenaiEx.new()
+    messages = create_messages(prompt)
+    stream= openai |> stream(messages)
+    stream.body_stream |> content_stream() |> send_chunks(owner)
+  end
 
-    When you need to add a new key-value pair to a map, you have to use the `Map.put/3` or `Map.put_new/3` function explicitly. These functions provide a clear and explicit way to add new key-value pairs to a map.
+  defp create_messages(prompt) do
+    [
+      ChatMessage.system("You are an AI assistant."),
+      ChatMessage.user(prompt)
+    ]
+  end
 
-    While there isn't a direct shorthand syntax for `Map.put/3`, you can still use the pipe operator `|>` to chain multiple `Map.put/3` calls together for readability:
+  defp create_request(args) do
+    args
+    |> Enum.into(%{model: "gpt-3.5-turbo", temperature: 0.7})
+    |> OpenaiEx.Chat.Completions.new()
+  end
 
-    ```elixir
-    map
-    |> Map.put(:key1, value1)
-    |> Map.put(:key2, value2)
-    |> Map.put(:key3, value3)
-    ```
+  defp stream(openai, messages) do
+    chat_request = create_request(messages: messages)
+    openai |> OpenaiEx.Chat.Completions.create(chat_request, stream: true)
+  end
 
-    This code creates a new map with the added key-value pairs, starting from the original `map`.
+  defp content_stream(body_stream) do
+    body_stream
+    |> Stream.flat_map(& &1)
+    |> Stream.map(fn %{data: d} -> d |> Map.get("choices") |> Enum.at(0) |> Map.get("delta") end)
+    |> Stream.filter(fn map -> map |> Map.has_key?("content") end)
+    |> Stream.map(fn map -> map |> Map.get("content") end)
+  end
 
-    In summary, while there is a shorthand syntax for updating existing keys in a map using the `|` operator, there is no direct shorthand equivalent for adding new key-value pairs using `Map.put/3`. You need to use the `Map.put/3` or `Map.put_new/3` function explicitly when adding new key-value pairs to a map.
-  """
-
-  def send_completion_request(owner, _prompt) do
-    chunks = String.split(@example, " ")
-
-    Enum.each(chunks, fn chunk ->
-      send(owner, {:chunk, chunk})
-      Process.sleep(200)
-    end)
-
+  defp send_chunks(content_stream, owner) do
+    content_stream |> Enum.each(fn chunk -> send(owner, {:chunk, chunk}) end)
     send(owner, :chunk_complete)
   end
 end
