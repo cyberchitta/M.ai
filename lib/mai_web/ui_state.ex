@@ -10,7 +10,7 @@ defmodule MaiWeb.UiState do
   end
 
   def index(user_id, chat_id) do
-    chat = Mai.Contexts.Chat.get_chat_details(chat_id)
+    chat = Chat.details(chat_id)
     %{sidebar: sidebar(user_id), main: Map.put(chat, :uistate, uistate(""))}
   end
 

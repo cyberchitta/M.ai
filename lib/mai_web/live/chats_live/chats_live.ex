@@ -4,7 +4,7 @@ defmodule MaiWeb.ChatsLive do
 
   import MaiWeb.Live.ChatsLive.Html
 
-  alias Mai.Contexts.Message
+  alias Mai.Contexts.Chat
   alias MaiWeb.UiState
 
   def mount(%{"id" => chat_id}, %{"user_id" => user_id}, socket) do
@@ -20,23 +20,31 @@ defmodule MaiWeb.ChatsLive do
   end
 
   defp enable_gauth(socket) do
-    socket |> assign(oauth_google_url: UserAuth.login_url())
+    socket |> assign(oauth_google_url: UserAuth.gauth_url())
   end
 
   def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
     main = socket.assigns.main
 
-    chat_id = main.chat.id
-    turn_number = length(main.messages) + 1
+    {chat_id, turn_number, next_socket, next_main} =
+      if get_in(main, [:chat]) do
+        {main.chat.id, length(main.messages) + 1, socket, main}
+      else
+        user = socket.assigns.user
+        chat = Chat.create(%{name: "NewChat", description: "Unnamed", user_id: user.id})
+
+        {chat.id, 1, socket |> push_navigate(to: ~p"/chats/#{chat.id}"),
+         %{chat: chat, messages: [], uistate: main.ui_state}}
+      end
 
     streaming = %{
-      user: Message.user(chat_id, turn_number, prompt) |> Map.put(:id, nil),
-      assistant: Message.assistant(chat_id, turn_number + 1, "") |> Map.put(:id, nil),
+      user: Chat.user_msg(chat_id, turn_number, prompt) |> Map.put(:id, nil),
+      assistant: Chat.assistant_msg(chat_id, turn_number + 1, "") |> Map.put(:id, nil),
       task: nil
     }
 
     send(self(), {:start_completion, streaming})
-    {:noreply, assign(socket, main: main |> UiState.with_streaming(streaming))}
+    {:noreply, next_socket |> assign(main: next_main |> UiState.with_streaming(streaming))}
   end
 
   def handle_event("cancel", _, socket) do

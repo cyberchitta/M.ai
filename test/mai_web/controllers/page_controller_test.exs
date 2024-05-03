@@ -10,6 +10,6 @@ defmodule MaiWeb.PageControllerTest do
     conn = get(conn, ~p"/")
 
     assert html_response(conn, 200) =~
-             "LLMs can make mistakes. Consider checking important information."
+             "Please note: You will need to authenticate with Google to access the chat features."
   end
 end

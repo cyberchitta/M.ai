@@ -16,7 +16,7 @@ defmodule Mai.Schemas.User do
 
   def changeset(attrs) do
     %__MODULE__{}
-    |> cast(attrs, [:google_id, :email, :name, :avatar_url])
+    |> cast(attrs, [:id, :google_id, :email, :name, :avatar_url])
     |> validate_required([:google_id, :email, :name])
     |> unique_constraint(:google_id)
     |> unique_constraint(:email)

@@ -10,25 +10,30 @@ defmodule MaiWeb.Router do
     plug :put_root_layout, html: {MaiWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   scope "/", MaiWeb do
     pipe_through :browser
 
-    get "/auth/google/callback", GauthController, :callback
-    get "/logout", GauthController, :logout
+    get "/", PageController, :index
+    get "/gauth", PageController, :gauth
+  end
 
-    live_session :user,
-      on_mount: [{MaiWeb.UserAuth, :mount_user}] do
-      live "/", ChatsLive, :index
-    end
+  scope "/", MaiWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/auth/google/callback", GauthController, :callback
   end
 
   scope "/", MaiWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    get "/logout", GauthController, :logout
+
     live_session :authenticated,
       on_mount: [{MaiWeb.UserAuth, :ensure_authenticated}] do
+      live "/chats", ChatsLive, :index
       live "/chats/:id", ChatsLive, :show
     end
   end

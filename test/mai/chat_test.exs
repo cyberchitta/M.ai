@@ -10,7 +10,7 @@ defmodule Mai.ChatTest do
 
   test "get_chat_details/1 returns the chat details and messages" do
     chat = Mai.RepoPostgres.one(from(c in Mai.Schemas.Chat, limit: 1))
-    chat_details = Chat.get_chat_details(chat.id)
+    chat_details = Chat.details(chat.id)
 
     assert chat_details.chat.id == chat.id
     assert chat_details.chat.name != nil

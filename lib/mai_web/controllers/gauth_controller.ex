@@ -3,6 +3,7 @@ defmodule MaiWeb.GauthController do
 
   alias MaiWeb.UserAuth
 
+  @spec callback(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def callback(conn, %{"code" => code}) do
     {:ok, token} = ElixirAuthGoogle.get_token(code, conn)
     {:ok, profile} = ElixirAuthGoogle.get_user_profile(token.access_token)

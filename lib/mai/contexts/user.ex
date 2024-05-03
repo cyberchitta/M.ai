@@ -1,39 +1,32 @@
 defmodule Mai.Contexts.User do
   @moduledoc false
   import Ecto.Query
+  import Mai.RepoPostgres
 
-  alias Mai.Schemas.User
+  alias Mai.Schemas.{User, Chat}
 
   def get_by_id(user_id) do
-    Mai.RepoPostgres.get(Mai.Schemas.User, user_id)
+    User |> get(user_id)
   end
 
   def list_chats(user_id) do
-    from(c in Mai.Schemas.Chat,
+    from(c in Chat,
       where: c.user_id == ^user_id,
       select: %{id: c.id, name: c.name, description: c.description}
     )
-    |> Mai.RepoPostgres.all()
+    |> all()
   end
 
   def upsert!(profile) do
-    u = %{
-      google_id: profile.sub,
-      email: profile.email,
-      name: profile.name,
-      avatar_url: profile.picture
-    }
+    u =
+      %{
+        google_id: profile.sub,
+        email: profile.email,
+        name: profile.name,
+        avatar_url: profile.picture
+      }
 
-    case Mai.RepoPostgres.get_by(User, email: profile.email) do
-      nil ->
-        u |> User.changeset() |> Mai.RepoPostgres.insert!()
-
-      user ->
-        user
-        |> Map.from_struct()
-        |> Map.merge(u)
-        |> User.changeset()
-        |> Mai.RepoPostgres.update!()
-    end
+    user = User |> get_by(email: profile.email)
+    unless user, do: u |> User.changeset() |> insert!(), else: user
   end
 end
