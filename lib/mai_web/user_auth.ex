@@ -7,6 +7,10 @@ defmodule MaiWeb.UserAuth do
 
   alias Mai.Contexts.User
 
+  def login_url() do
+    MaiWeb.Endpoint.url() |> ElixirAuthGoogle.generate_oauth_url()
+  end
+
   def log_in_user(conn, user, _params \\ %{}) do
     conn |> renew_session() |> put_token_in_session(user.id)
   end
@@ -37,7 +41,7 @@ defmodule MaiWeb.UserAuth do
       s =
         socket
         |> Phoenix.LiveView.put_flash(:error, "You must log in to access this page.")
-        |> Phoenix.LiveView.redirect(to: ~p"/users/log_in")
+        |> Phoenix.LiveView.redirect(to: login_url())
 
       {:halt, s}
     end
@@ -58,7 +62,7 @@ defmodule MaiWeb.UserAuth do
       conn
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
-      |> redirect(to: ~p"/users/log_in")
+      |> redirect(to: login_url())
       |> halt()
     end
   end

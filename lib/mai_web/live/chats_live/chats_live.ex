@@ -1,4 +1,5 @@
 defmodule MaiWeb.ChatsLive do
+  alias MaiWeb.UserAuth
   use MaiWeb, :live_view
 
   import MaiWeb.Live.ChatsLive.Html
@@ -19,8 +20,7 @@ defmodule MaiWeb.ChatsLive do
   end
 
   defp enable_gauth(socket) do
-    oauth_google_url = MaiWeb.Endpoint.url() |> ElixirAuthGoogle.generate_oauth_url()
-    socket |> assign(oauth_google_url: oauth_google_url)
+    socket |> assign(oauth_google_url: UserAuth.login_url())
   end
 
   def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
