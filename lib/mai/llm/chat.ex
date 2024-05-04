@@ -3,9 +3,9 @@ defmodule Mai.Llm.Chat do
   alias OpenaiEx.ChatMessage
 
   def send_completion_request(owner, prompt) do
-    openai = System.fetch_env!("OPENAI_API_KEY") |> OpenaiEx.new()
+    openai = Application.get_env(:mai, :openai_api_key) |> OpenaiEx.new()
     messages = create_messages(prompt)
-    stream= openai |> stream(messages)
+    stream = openai |> stream(messages)
     stream.body_stream |> content_stream() |> send_chunks(owner)
   end
 

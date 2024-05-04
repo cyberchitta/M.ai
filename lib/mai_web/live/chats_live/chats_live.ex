@@ -34,7 +34,7 @@ defmodule MaiWeb.ChatsLive do
         chat = Chat.create(%{name: "NewChat", description: "Unnamed", user_id: user.id})
 
         {chat.id, 1, socket |> push_navigate(to: ~p"/chats/#{chat.id}"),
-         %{chat: chat, messages: [], uistate: main.ui_state}}
+         %{chat: chat, messages: [], uistate: main.uistate}}
       end
 
     streaming = %{

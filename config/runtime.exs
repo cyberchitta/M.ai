@@ -39,6 +39,9 @@ config :mai, Mai.RepoPostgres,
     ),
   ssl: false
 
+config :mai,
+  openai_api_key: env!("OPENAI_API_KEY")
+
 config :elixir_auth_google,
   client_id: env!("GOOGLE_CLIENT_ID"),
   client_secret: env!("GOOGLE_CLIENT_SECRET")
