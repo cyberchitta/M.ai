@@ -10,7 +10,9 @@ defmodule Mai.Application do
       MaiWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:mai, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mai.PubSub},
-      MaiWeb.Endpoint
+      MaiWeb.Endpoint,
+      {Mai.Llm.ChatManager, []},
+      {Task.Supervisor, name: Mai.TaskSupervisor}
     ]
 
     opts = [strategy: :one_for_one, name: Mai.Supervisor]

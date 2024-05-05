@@ -2,10 +2,13 @@ defmodule Mai.Llm.Chat do
   alias OpenaiEx
   alias OpenaiEx.ChatMessage
 
-  def send_completion_request(owner, prompt) do
+  def initiate_stream(prompt) do
     openai = Application.get_env(:mai, :openai_api_key) |> OpenaiEx.new()
     messages = create_messages(prompt)
-    stream = openai |> stream(messages)
+    openai |> stream(messages)
+  end
+
+  def process_stream(owner, stream) do
     stream.body_stream |> content_stream() |> send_chunks(owner)
   end
 
@@ -37,6 +40,6 @@ defmodule Mai.Llm.Chat do
 
   defp send_chunks(content_stream, owner) do
     content_stream |> Enum.each(fn chunk -> send(owner, {:chunk, chunk}) end)
-    send(owner, :chunk_complete)
+    send(owner, :end_of_stream)
   end
 end
