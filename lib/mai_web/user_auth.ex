@@ -63,7 +63,7 @@ defmodule MaiWeb.UserAuth do
   end
 
   defp mount_user(socket, session) do
-    user_id = session["user_id"] |> IO.inspect()
+    user_id = session["user_id"]
 
     socket
     |> Phoenix.Component.assign(:user_id, user_id)

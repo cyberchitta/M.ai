@@ -1,6 +1,7 @@
 defmodule MaiWeb.ChatsLive do
   alias MaiWeb.UserAuth
   use MaiWeb, :live_view
+  require Logger
 
   import MaiWeb.Live.ChatsLive.Html
 
@@ -92,7 +93,7 @@ defmodule MaiWeb.ChatsLive do
   end
 
   def handle_info(message, socket) do
-    IO.inspect(message, label: "Unmatched message")
+    Logger.error("Unmatched message: #{inspect(message)}")
     {:noreply, socket}
   end
 end
