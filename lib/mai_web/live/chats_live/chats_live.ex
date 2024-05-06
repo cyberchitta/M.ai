@@ -71,7 +71,7 @@ defmodule MaiWeb.ChatsLive do
     {:noreply, assign(socket, main: main |> UiState.with_cancel_pid(pid))}
   end
 
-  def handle_info({:chunk, chunk}, socket) do
+  def handle_info({:next_chunk, chunk}, socket) do
     main = socket.assigns.main
     streaming = main.uistate.streaming |> UiState.with_chunk(chunk)
     {:noreply, assign(socket, main: main |> UiState.with_streaming(streaming))}

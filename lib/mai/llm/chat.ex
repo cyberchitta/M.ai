@@ -34,8 +34,8 @@ defmodule Mai.Llm.Chat do
     openai |> OpenaiEx.Chat.Completions.create(chat_request, stream: true)
   end
 
-  defp content_stream(body_stream) do
-    body_stream
+  defp content_stream(base_stream) do
+    base_stream
     |> Stream.flat_map(& &1)
     |> Stream.map(fn %{data: d} -> d |> Map.get("choices") |> Enum.at(0) |> Map.get("delta") end)
     |> Stream.filter(fn map -> map |> Map.has_key?("content") end)
@@ -43,7 +43,7 @@ defmodule Mai.Llm.Chat do
   end
 
   defp send_chunks(content_stream, receiver) do
-    content_stream |> Enum.each(fn chunk -> send(receiver, {:chunk, chunk}) end)
+    content_stream |> Enum.each(fn chunk -> send(receiver, {:next_chunk, chunk}) end)
     send(receiver, :end_of_stream)
   end
 end
