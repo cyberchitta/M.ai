@@ -8,8 +8,12 @@ defmodule Mai.Llm.Chat do
     openai |> stream(messages)
   end
 
-  def process_stream(owner, stream) do
-    stream.body_stream |> content_stream() |> send_chunks(owner)
+  def process_stream(receiver, stream) do
+    stream.body_stream |> content_stream() |> send_chunks(receiver)
+  end
+
+  def cancel_stream(cancel_pid) do
+    OpenaiEx.HttpSse.cancel_request(cancel_pid)
   end
 
   defp create_messages(prompt) do
@@ -38,8 +42,8 @@ defmodule Mai.Llm.Chat do
     |> Stream.map(fn map -> map |> Map.get("content") end)
   end
 
-  defp send_chunks(content_stream, owner) do
-    content_stream |> Enum.each(fn chunk -> send(owner, {:chunk, chunk}) end)
-    send(owner, :end_of_stream)
+  defp send_chunks(content_stream, receiver) do
+    content_stream |> Enum.each(fn chunk -> send(receiver, {:chunk, chunk}) end)
+    send(receiver, :end_of_stream)
   end
 end

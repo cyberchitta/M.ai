@@ -30,8 +30,8 @@ defmodule MaiWeb.UiState do
     %{main | uistate: %{main.uistate | streaming: streaming}}
   end
 
-  def with_task(streaming, task \\ nil) do
-    %{streaming | task: task}
+  def with_cancel_pid(main, pid \\ nil) do
+    %{main | uistate: %{main.uistate | streaming: %{main.uistate.streaming | cancel_pid: pid}}}
   end
 
   def with_chunk(streaming, chunk) do

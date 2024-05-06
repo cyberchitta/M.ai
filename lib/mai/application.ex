@@ -11,7 +11,6 @@ defmodule Mai.Application do
       {DNSCluster, query: Application.get_env(:mai, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Mai.PubSub},
       MaiWeb.Endpoint,
-      {Mai.Llm.ChatManager, []},
       {Task.Supervisor, name: Mai.TaskSupervisor}
     ]
 

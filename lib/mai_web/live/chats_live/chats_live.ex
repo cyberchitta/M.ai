@@ -39,10 +39,18 @@ defmodule MaiWeb.ChatsLive do
 
     streaming = %{
       user: Chat.user_msg(chat_id, turn_number, prompt) |> Map.put(:id, nil),
-      assistant: Chat.assistant_msg(chat_id, turn_number + 1, "") |> Map.put(:id, nil)
+      assistant: Chat.assistant_msg(chat_id, turn_number + 1, "") |> Map.put(:id, nil),
+      cancel_pid: nil
     }
 
-    Mai.Llm.ChatManager.start_completion(self(), chat_id, prompt)
+    liveview_pid = self()
+
+    Task.Supervisor.start_child(Mai.TaskSupervisor, fn ->
+      stream = Mai.Llm.Chat.initiate_stream(prompt)
+      send(liveview_pid, {:cancel_pid, stream.task_pid})
+      Mai.Llm.Chat.process_stream(liveview_pid, stream)
+    end)
+
     {:noreply, next_socket |> assign(main: next_main |> UiState.with_streaming(streaming))}
   end
 
@@ -50,12 +58,17 @@ defmodule MaiWeb.ChatsLive do
     main = socket.assigns.main
     streaming = main.uistate.streaming
 
-    if streaming do
-      Mai.Llm.ChatManager.cancel(main.chat_id)
+    if streaming && streaming.cancel_pid do
+      Mai.Llm.Chat.cancel_stream(streaming.cancel_pid)
       {:noreply, assign(socket, main: main |> UiState.with_streaming())}
     else
       {:noreply, socket}
     end
+  end
+
+  def handle_info({:cancel_pid, pid}, socket) do
+    main = socket.assigns.main
+    {:noreply, assign(socket, main: main |> UiState.with_cancel_pid(pid))}
   end
 
   def handle_info({:chunk, chunk}, socket) do
@@ -66,7 +79,6 @@ defmodule MaiWeb.ChatsLive do
 
   def handle_info(:end_of_stream, socket) do
     main = socket.assigns.main
-    Task.shutdown(main.uistate.streaming.task)
     {:noreply, assign(socket, main: main |> UiState.with_streaming())}
   end
 
