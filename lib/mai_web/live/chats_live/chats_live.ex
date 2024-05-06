@@ -79,7 +79,16 @@ defmodule MaiWeb.ChatsLive do
 
   def handle_info(:end_of_stream, socket) do
     main = socket.assigns.main
-    {:noreply, assign(socket, main: main |> UiState.with_streaming())}
+    streaming = main.uistate.streaming
+
+    user = streaming.user
+    asst = streaming.assistant
+    user_record = Chat.add_message!(user.chat_id, user.content, user.role, user.turn_number)
+    asst_record = Chat.add_message!(asst.chat_id, asst.content, asst.role, asst.turn_number)
+    Chat.touch(user.chat_id)
+    next_messages = main.messages ++ [user_record, asst_record]
+    next_main = %{main | messages: next_messages}
+    {:noreply, assign(socket, main: next_main |> UiState.with_streaming())}
   end
 
   def handle_info(message, socket) do

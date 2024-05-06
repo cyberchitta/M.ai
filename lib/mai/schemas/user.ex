@@ -14,8 +14,8 @@ defmodule Mai.Schemas.User do
     timestamps()
   end
 
-  def changeset(attrs) do
-    %__MODULE__{}
+  def changeset(user, attrs) do
+    user
     |> cast(attrs, [:id, :google_id, :email, :name, :avatar_url])
     |> validate_required([:google_id, :email, :name])
     |> unique_constraint(:google_id)

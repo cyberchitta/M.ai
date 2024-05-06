@@ -18,8 +18,8 @@ defmodule Mai.Schemas.Message do
     timestamps()
   end
 
-  def changeset(attrs) do
-    %__MODULE__{}
+  def changeset(message, attrs) do
+    message
     |> cast(attrs, [:content, :role, :chat_id, :turn_number, :original_message_id])
     |> validate_required([:content, :role, :chat_id, :turn_number])
     |> validate_inclusion(:role, ["assistant", "user"])

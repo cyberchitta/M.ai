@@ -5,7 +5,7 @@ defmodule Mai.Contexts.Chat do
   alias Mai.Schemas.{Chat, Message}
 
   def create(attrs) do
-    Chat.changeset(attrs) |> insert!()
+    %Chat{} |> Chat.changeset(attrs) |> insert!()
   end
 
   def user_msg(chat_id, turn_number, content) do
@@ -20,14 +20,18 @@ defmodule Mai.Contexts.Chat do
     %{chat_id: chat_id, turn_number: turn_number, role: role, content: content}
   end
 
+  def touch(chat_id) do
+    Chat |> get(chat_id) |> Chat.changeset(%{updated_at: DateTime.utc_now()}) |> update!()
+  end
+
   def add_message!(chat_id, content, role, turn_number) do
-    %{
+    %Message{}
+    |> Message.changeset(%{
       content: content,
       chat_id: chat_id,
       role: role,
       turn_number: turn_number
-    }
-    |> Message.changeset()
+    })
     |> insert!()
   end
 
