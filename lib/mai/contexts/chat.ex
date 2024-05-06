@@ -67,20 +67,20 @@ defmodule Mai.Contexts.Chat do
     one_week_ago = Date.add(today, -7)
     one_month_ago = Date.add(today, -30)
 
-    case true do
-      _ when date >= today ->
+    cond do
+      Date.compare(date, today) == :eq ->
         "Today"
 
-      _ when date >= yesterday ->
+      Date.compare(date, yesterday) == :eq ->
         "Yesterday"
 
-      _ when date >= one_week_ago ->
+      Date.compare(date, one_week_ago) in [:eq, :gt] ->
         "Previous 7 Days"
 
-      _ when date >= one_month_ago ->
+      Date.compare(date, one_month_ago) in [:eq, :gt] ->
         "Previous 30 Days"
 
-      _ ->
+      true ->
         month_name = Calendar.strftime(date, "%B")
         "#{month_name} #{date.year}"
     end
