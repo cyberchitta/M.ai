@@ -1,4 +1,5 @@
 defmodule Mai.Llm.Chat do
+  @moduledoc false
   alias OpenaiEx
   alias OpenaiEx.ChatMessage
 

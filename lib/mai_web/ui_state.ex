@@ -1,4 +1,5 @@
 defmodule MaiWeb.UiState do
+  @moduledoc false
   alias Mai.Contexts.Chat
   alias Mai.Contexts.User
 
@@ -15,10 +16,10 @@ defmodule MaiWeb.UiState do
   end
 
   defp sidebar(user_id) do
-    unless is_nil(user_id) do
-      %{periods: Chat.list_by_period(user_id), user: User.get_by_id(user_id)}
-    else
+    if is_nil(user_id) do
       %{periods: [], user: nil}
+    else
+      %{periods: Chat.list_by_period(user_id), user: User.get_by_id(user_id)}
     end
   end
 

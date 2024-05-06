@@ -26,6 +26,7 @@ defmodule Mai.MixProject do
   defp deps do
     [
       {:bandit, "~> 1.2"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dns_cluster, "~> 0.1.1"},
       {:dotenvy, "~> 0.8.0"},
       {:earmark, "~> 1.4"},

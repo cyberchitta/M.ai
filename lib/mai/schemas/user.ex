@@ -1,4 +1,5 @@
 defmodule Mai.Schemas.User do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

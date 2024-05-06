@@ -1,4 +1,5 @@
 defmodule Mai.Contexts.Suggestion do
+  @moduledoc false
   def get_default() do
     [
       %{

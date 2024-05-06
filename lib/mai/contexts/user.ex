@@ -27,6 +27,6 @@ defmodule Mai.Contexts.User do
       }
 
     user = User |> get_by(email: profile.email)
-    unless user, do: %User{} |> User.changeset(u) |> insert!(), else: user
+    if user, do: user, else: %User{} |> User.changeset(u) |> insert!()
   end
 end
