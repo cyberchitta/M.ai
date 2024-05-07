@@ -8,6 +8,13 @@ defmodule Mai.Contexts.Chat do
     %Chat{} |> Chat.changeset(attrs) |> insert!()
   end
 
+  def validate(chat_id) do
+    case Chat |> get(chat_id) do
+      nil -> {:error}
+      chat -> {:ok, chat}
+    end
+  end
+
   def touch(chat_id) do
     Chat
     |> get(chat_id)
@@ -26,10 +33,6 @@ defmodule Mai.Contexts.Chat do
 
   defp msg(chat_id, turn_number, role, content) do
     %{chat_id: chat_id, turn_number: turn_number, role: role, content: content}
-  end
-
-  def touch(chat_id) do
-    Chat |> get(chat_id) |> Chat.changeset(%{updated_at: DateTime.utc_now()}) |> update!()
   end
 
   def add_message!(chat_id, content, role, turn_number) do

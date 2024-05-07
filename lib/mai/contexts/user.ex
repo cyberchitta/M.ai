@@ -9,6 +9,13 @@ defmodule Mai.Contexts.User do
     User |> get(user_id)
   end
 
+  def validate(user_id) do
+    case get_by_id(user_id) do
+      nil -> {:error}
+      user -> {:ok, user}
+    end
+  end
+
   def list_chats(user_id) do
     from(c in Chat,
       where: c.user_id == ^user_id,
