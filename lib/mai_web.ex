@@ -52,7 +52,7 @@ defmodule MaiWeb do
       import Phoenix.Controller,
         only: [get_csrf_token: 0, view_module: 1, view_template: 1]
 
-      unquote(html_helpers())
+        unquote(html_helpers())
     end
   end
 
@@ -60,6 +60,7 @@ defmodule MaiWeb do
     quote do
       import Phoenix.HTML
       alias Phoenix.LiveView.JS
+      import MaiWeb.Components
       unquote(verified_routes())
     end
   end

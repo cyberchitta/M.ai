@@ -35,6 +35,7 @@ defmodule Mai.MixProject do
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:exandra, "~> 0.10"},
       {:floki, ">= 0.30.0", only: :test},
+      {:gettext, "~> 0.24"},
       {:heroicons,
        github: "tailwindlabs/heroicons",
        tag: "v2.1.1",
