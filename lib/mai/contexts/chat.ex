@@ -8,6 +8,14 @@ defmodule Mai.Contexts.Chat do
     %Chat{} |> Chat.changeset(attrs) |> insert!()
   end
 
+  def touch(chat_id) do
+    Chat
+    |> get(chat_id)
+    |> Chat.changeset(%{})
+    |> Ecto.Changeset.put_change(:updated_at, DateTime.utc_now(:second))
+    |> update!()
+  end
+
   def user_msg(chat_id, turn_number, content) do
     msg(chat_id, turn_number, "user", content)
   end
