@@ -25,13 +25,12 @@ defmodule Mai.Contexts.User do
   end
 
   def upsert!(profile) do
-    u =
-      %{
-        google_id: profile.sub,
-        email: profile.email,
-        name: profile.name,
-        avatar_url: profile.picture
-      }
+    u = %{
+      google_id: profile.sub,
+      email: profile.email,
+      name: profile.name,
+      avatar_url: profile.picture
+    }
 
     user = User |> get_by(email: profile.email)
     if user, do: user, else: %User{} |> User.changeset(u) |> insert!()
