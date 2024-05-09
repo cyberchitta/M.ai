@@ -1,5 +1,5 @@
 defmodule MaiWeb.ChatsLive do
-  alias MaiWeb.UserAuth
+  alias MaiWeb.UserGauth
   use MaiWeb, :live_view
   require Logger
 
@@ -112,6 +112,6 @@ defmodule MaiWeb.ChatsLive do
   end
 
   defp enable_gauth(socket) do
-    socket |> assign(oauth_google_url: UserAuth.gauth_url())
+    socket |> assign(oauth_google_url: UserGauth.gauth_url())
   end
 end

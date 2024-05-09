@@ -1,6 +1,6 @@
 # lib/mai_web/controllers/page_controller.ex
 defmodule MaiWeb.PageController do
-  alias MaiWeb.UserAuth
+  alias MaiWeb.UserGauth
   use MaiWeb, :controller
 
   def index(conn, _params) do
@@ -8,6 +8,6 @@ defmodule MaiWeb.PageController do
   end
 
   def gauth(conn, _params) do
-    redirect(conn, external: UserAuth.gauth_url())
+    redirect(conn, external: UserGauth.gauth_url())
   end
 end

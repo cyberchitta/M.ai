@@ -1,7 +1,7 @@
 defmodule MaiWeb.Router do
   use MaiWeb, :router
 
-  import MaiWeb.UserAuth
+  import MaiWeb.UserGauth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -32,7 +32,7 @@ defmodule MaiWeb.Router do
     get "/logout", GauthController, :logout
 
     live_session :authenticated,
-      on_mount: [{MaiWeb.UserAuth, :ensure_authenticated}] do
+      on_mount: [{MaiWeb.UserGauth, :ensure_authenticated}] do
       live "/chats", ChatsLive, :index
       live "/chats/:id", ChatsLive, :show
     end

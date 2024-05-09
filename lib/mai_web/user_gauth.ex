@@ -1,4 +1,4 @@
-defmodule MaiWeb.UserAuth do
+defmodule MaiWeb.UserGauth do
   @moduledoc false
   use MaiWeb, :verified_routes
 
