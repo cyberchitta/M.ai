@@ -12,7 +12,7 @@ defmodule MaiWeb.UserGauth do
   end
 
   def log_in_user(conn, user, _params \\ %{}) do
-    conn |> renew_session() |> put_token_in_session(user.id)
+    conn |> renew_session() |> put_token_in_session(user.email)
   end
 
   defp renew_session(conn) do
@@ -29,8 +29,8 @@ defmodule MaiWeb.UserGauth do
   end
 
   def fetch_current_user(conn, _opts) do
-    user_id = get_session(conn, :user_id)
-    conn |> assign(:user_id, user_id)
+    user_email = get_session(conn, :user_email)
+    conn |> assign(:user_email, user_email)
   end
 
   def on_mount(:mount_user, _params, session, socket) do
@@ -40,7 +40,7 @@ defmodule MaiWeb.UserGauth do
   def on_mount(:ensure_authenticated, _params, session, socket) do
     socket = mount_user(socket, session)
 
-    if socket.assigns[:user_id] do
+    if socket.assigns[:user_email] do
       {:cont, socket}
     else
       s =
@@ -55,7 +55,7 @@ defmodule MaiWeb.UserGauth do
   def on_mount(:redirect_if_user_is_authenticated, _params, session, socket) do
     socket = mount_user(socket, session)
 
-    if socket.assigns[:user_id] do
+    if socket.assigns[:user_email] do
       {:halt, Phoenix.LiveView.redirect(socket, to: signed_in_path(socket))}
     else
       {:cont, socket}
@@ -63,19 +63,19 @@ defmodule MaiWeb.UserGauth do
   end
 
   defp mount_user(socket, session) do
-    user_id = session["user_id"]
+    user_email = session["user_email"]
 
     socket
-    |> Phoenix.Component.assign(:user_id, user_id)
+    |> Phoenix.Component.assign(:user_email, user_email)
     |> Phoenix.Component.assign_new(:user, fn ->
-      if user_id do
-        User.get_by_id(user_id)
+      if user_email do
+        User.get_by_email(user_email)
       end
     end)
   end
 
   def redirect_if_user_is_authenticated(conn, _opts) do
-    if conn.assigns[:user_id] do
+    if conn.assigns[:user_email] do
       conn
       |> redirect(to: signed_in_path(conn))
       |> halt()
@@ -85,7 +85,7 @@ defmodule MaiWeb.UserGauth do
   end
 
   def require_authenticated_user(conn, _opts) do
-    if conn.assigns[:user_id] do
+    if conn.assigns[:user_email] do
       conn
     else
       conn
@@ -98,7 +98,7 @@ defmodule MaiWeb.UserGauth do
 
   defp put_token_in_session(conn, token) do
     conn
-    |> put_session(:user_id, token)
+    |> put_session(:user_email, token)
     |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
   end
 

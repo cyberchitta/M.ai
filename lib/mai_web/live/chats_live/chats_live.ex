@@ -8,12 +8,12 @@ defmodule MaiWeb.ChatsLive do
   alias Mai.Contexts.Chat
   alias MaiWeb.UiState
 
-  def mount(%{"id" => chat_id}, %{"user_id" => user_id}, socket) do
-    {:ok, socket |> assign(UiState.index(user_id, chat_id)) |> enable_gauth()}
+  def mount(%{"id" => chat_id}, %{"user_email" => user_email}, socket) do
+    {:ok, socket |> assign(UiState.index(user_email, chat_id)) |> enable_gauth()}
   end
 
-  def mount(_params, %{"user_id" => user_id}, socket) do
-    {:ok, socket |> assign(UiState.index(user_id)) |> enable_gauth()}
+  def mount(_params, %{"user_email" => user_email}, socket) do
+    {:ok, socket |> assign(UiState.index(user_email)) |> enable_gauth()}
   end
 
   def mount(_params, _session, socket) do

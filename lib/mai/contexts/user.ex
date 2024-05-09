@@ -5,12 +5,12 @@ defmodule Mai.Contexts.User do
 
   alias Mai.Schemas.{User, Chat}
 
-  def get_by_id(user_id) do
-    User |> get(user_id)
+  def get_by_email(user_email) do
+    User |> get_by(email: user_email)
   end
 
-  def validate(user_id) do
-    case get_by_id(user_id) do
+  def validate(user_email) do
+    case get_by_email(user_email) do
       nil -> {:error}
       user -> {:ok, user}
     end

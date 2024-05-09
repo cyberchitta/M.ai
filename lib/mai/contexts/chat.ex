@@ -59,9 +59,9 @@ defmodule Mai.Contexts.Chat do
     %{chat: chat, messages: messages}
   end
 
-  def list_by_period(user_id) do
+  def list_by_period(user_email) do
     from(c in Chat,
-      where: c.user_id == ^user_id,
+      where: c.email == ^user_email,
       order_by: [desc: c.updated_at],
       select: %{id: c.id, name: c.name, updated_at: c.updated_at}
     )

@@ -1,25 +1,24 @@
 defmodule MaiWeb.UiState do
   @moduledoc false
-  alias Mai.Contexts.Chat
-  alias Mai.Contexts.User
+  alias Mai.Contexts.{Chat, User, Suggestion}
 
-  def index(user_id) do
-    suggestions = Mai.Contexts.Suggestion.get_default()
+  def index(user_email) do
+    suggestions = Suggestion.get_default()
     picked = Enum.random(suggestions)
     prompt = picked.title <> " " <> picked.description
-    %{sidebar: sidebar(user_id), main: %{suggestions: suggestions, uistate: uistate(prompt)}}
+    %{sidebar: sidebar(user_email), main: %{suggestions: suggestions, uistate: uistate(prompt)}}
   end
 
-  def index(user_id, chat_id) do
+  def index(user_email, chat_id) do
     chat = Chat.details(chat_id)
-    %{sidebar: sidebar(user_id), main: Map.put(chat, :uistate, uistate(""))}
+    %{sidebar: sidebar(user_email), main: Map.put(chat, :uistate, uistate(""))}
   end
 
-  defp sidebar(user_id) do
-    if is_nil(user_id) do
+  defp sidebar(user_email) do
+    if is_nil(user_email) do
       %{periods: [], user: nil}
     else
-      %{periods: Chat.list_by_period(user_id), user: User.get_by_id(user_id)}
+      %{periods: Chat.list_by_period(user_email), user: User.get_by_email(user_email)}
     end
   end
 
