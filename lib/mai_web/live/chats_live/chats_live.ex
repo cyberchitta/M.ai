@@ -20,39 +20,21 @@ defmodule MaiWeb.ChatsLive do
     {:ok, socket |> assign(UiState.index(nil)) |> enable_gauth()}
   end
 
-  defp enable_gauth(socket) do
-    socket |> assign(oauth_google_url: UserAuth.gauth_url())
+  def handle_params(%{"id" => chat_id, "prompt" => prompt}, _uri, socket) do
+    send(self(), {:submit_prompt, URI.decode(prompt)})
+    {:noreply, socket |> push_patch(to: ~p"/chats/#{chat_id}", replace: true)}
+  end
+
+  def handle_params(_params, _uri, socket) do
+    {:noreply, socket}
   end
 
   def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
-    main = socket.assigns.main
-
-    {chat_id, turn_number, next_socket, next_main} =
-      if get_in(main, [:chat]) do
-        {main.chat.id, length(main.messages) + 1, socket, main}
-      else
-        user = socket.assigns.user
-        chat = Chat.create(%{name: "NewChat", description: "Unnamed", user_id: user.id})
-
-        {chat.id, 1, socket |> push_navigate(to: ~p"/chats/#{chat.id}"),
-         %{chat: chat, messages: [], uistate: main.uistate}}
-      end
-
-    streaming = %{
-      user: Chat.user_msg(chat_id, turn_number, prompt) |> Map.put(:id, nil),
-      assistant: Chat.assistant_msg(chat_id, turn_number + 1, "") |> Map.put(:id, nil),
-      cancel_pid: nil
-    }
-
-    liveview_pid = self()
-
-    Task.Supervisor.start_child(Mai.TaskSupervisor, fn ->
-      stream = Mai.Llm.Chat.initiate_stream(prompt)
-      send(liveview_pid, {:cancel_pid, stream.task_pid})
-      Mai.Llm.Chat.process_stream(liveview_pid, stream)
-    end)
-
-    {:noreply, next_socket |> assign(main: next_main |> UiState.with_streaming(streaming))}
+    if Map.get(socket.assigns.main, :chat) do
+      handle_submit_existing_chat(prompt, socket)
+    else
+      handle_submit_new_chat(prompt, socket)
+    end
   end
 
   def handle_event("cancel", _, socket) do
@@ -92,8 +74,44 @@ defmodule MaiWeb.ChatsLive do
     {:noreply, assign(socket, main: next_main |> UiState.with_streaming())}
   end
 
+  def handle_info({:submit_prompt, prompt}, socket) do
+    handle_submit_existing_chat(prompt, socket)
+  end
+
   def handle_info(message, socket) do
     Logger.error("Unmatched message: #{inspect(message)}")
     {:noreply, socket}
+  end
+
+  defp handle_submit_new_chat(prompt, socket) do
+    user = socket.assigns.user
+    chat = Chat.create(%{name: "NewChat", description: "Unnamed", user_id: user.id})
+    {:noreply, socket |> push_navigate(to: ~p"/chats/#{chat.id}?prompt=#{URI.encode(prompt)}")}
+  end
+
+  defp handle_submit_existing_chat(prompt, socket) do
+    main = socket.assigns.main
+    chat_id = main.chat.id
+    turn_number = length(main.messages) + 1
+
+    streaming = %{
+      user: Chat.user_msg(chat_id, turn_number, prompt) |> Map.put(:id, nil),
+      assistant: Chat.assistant_msg(chat_id, turn_number + 1, "") |> Map.put(:id, nil),
+      cancel_pid: nil
+    }
+
+    liveview_pid = self()
+
+    Task.Supervisor.start_child(Mai.TaskSupervisor, fn ->
+      stream = Mai.Llm.Chat.initiate_stream(prompt)
+      send(liveview_pid, {:cancel_pid, stream.task_pid})
+      Mai.Llm.Chat.process_stream(liveview_pid, stream)
+    end)
+
+    {:noreply, socket |> assign(main: main |> UiState.with_streaming(streaming))}
+  end
+
+  defp enable_gauth(socket) do
+    socket |> assign(oauth_google_url: UserAuth.gauth_url())
   end
 end
