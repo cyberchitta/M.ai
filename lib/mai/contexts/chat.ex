@@ -62,18 +62,13 @@ defmodule Mai.Contexts.Chat do
   def list_by_period(user_id) do
     from(c in Chat,
       where: c.user_id == ^user_id,
-      order_by: [desc: c.inserted_at],
-      select: %{
-        id: c.id,
-        name: c.name,
-        description: c.description,
-        updated_at: c.updated_at
-      }
+      order_by: [desc: c.updated_at],
+      select: %{id: c.id, name: c.name, updated_at: c.updated_at}
     )
     |> all()
     |> Enum.map(fn chat -> Map.put(chat, :period, period_label(chat.updated_at)) end)
-    |> Enum.group_by(& &1.period, &Map.take(&1, [:id, :name, :description, :updated_at]))
-    |> Enum.map(fn {period, chats} -> %{label: period, chats: chats} end)
+    |> Enum.chunk_by(& &1.period)
+    |> Enum.map(fn chats -> %{label: hd(chats).period, chats: chats} end)
   end
 
   defp period_label(date) do
