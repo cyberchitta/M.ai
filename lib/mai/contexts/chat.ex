@@ -2,7 +2,7 @@ defmodule Mai.Contexts.Chat do
   @moduledoc false
   import Ecto.Query
   import Mai.RepoPostgres
-  alias Mai.Schemas.{Chat, Message}
+  alias Mai.Schemas.{Chat, Message, User}
 
   def create(attrs) do
     %Chat{} |> Chat.changeset(attrs) |> insert!()
@@ -61,7 +61,9 @@ defmodule Mai.Contexts.Chat do
 
   def list_by_period(user_email) do
     from(c in Chat,
-      where: c.email == ^user_email,
+      join: u in User,
+      on: c.user_id == u.id,
+      where: u.email == ^user_email,
       order_by: [desc: c.updated_at],
       select: %{id: c.id, name: c.name, updated_at: c.updated_at}
     )
