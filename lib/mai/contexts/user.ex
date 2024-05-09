@@ -19,7 +19,7 @@ defmodule Mai.Contexts.User do
   def list_chats(user_id) do
     from(c in Chat,
       where: c.user_id == ^user_id,
-      select: %{id: c.id, name: c.name, description: c.description}
+      select: %{id: c.id, name: c.name}
     )
     |> all()
   end

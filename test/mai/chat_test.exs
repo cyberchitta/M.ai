@@ -14,7 +14,6 @@ defmodule Mai.ChatTest do
 
     assert chat_details.chat.id == chat.id
     assert chat_details.chat.name != nil
-    assert chat_details.chat.description != nil
     assert chat_details.chat.user_id != nil
 
     assert length(chat_details.messages) > 0
