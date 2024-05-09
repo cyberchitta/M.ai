@@ -7,7 +7,6 @@ defmodule Mai.Schemas.Chat do
   @primary_key {:id, Ecto.UUID, autogenerate: true}
   schema "chats" do
     field(:name, :string)
-    field(:description, :string)
 
     belongs_to(:user, Mai.Schemas.User, foreign_key: :user_id, type: Ecto.UUID)
     has_many(:messages, Mai.Schemas.Message, foreign_key: :chat_id)
