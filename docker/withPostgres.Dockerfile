@@ -5,8 +5,6 @@ ARG DEBIAN_VERSION=bookworm-20240408-slim
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
-ARG MIX_ENV=prod
-
 # Stage 1: Build the Elixir project
 FROM ${BUILDER_IMAGE} as builder
 
@@ -18,6 +16,8 @@ RUN apt-get update -y && apt-get install -y build-essential git curl \
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV MIX_ENV=prod
 
 WORKDIR /app
 
@@ -75,6 +75,8 @@ ENV LC_ALL en_US.UTF-8
 
 # Set up PostgreSQL
 RUN mkdir -p /var/lib/postgresql/data
+
+ENV MIX_ENV=prod
 
 # Set work directory
 WORKDIR /app
