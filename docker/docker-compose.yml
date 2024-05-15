@@ -1,8 +1,6 @@
-# docker/docker-compose.yaml
-version: '3.8'
-
 services:
   db:
+    env_file: .env
     image: postgres:15-alpine
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -10,6 +8,7 @@ services:
       - "5432:5432"
 
   web:
+    env_file: .env
     build:
       context: ..
       dockerfile: docker/Dockerfile
@@ -20,3 +19,6 @@ services:
 
 volumes:
   pgdata:
+
+networks:
+  mai_network:

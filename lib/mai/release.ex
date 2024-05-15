@@ -5,6 +5,28 @@ defmodule Mai.Release do
   """
   @app :mai
 
+  def create_database do
+    load_app()
+
+    config = Mai.RepoPostgres.config()
+
+    case Ecto.Adapters.Postgres.storage_status(config) do
+      :up ->
+        IO.puts("Database #{config[:database]} already exists")
+
+      :down ->
+        IO.puts("Database #{config[:database]} does not exist. Creating...")
+
+        case Ecto.Adapters.Postgres.storage_up(config) do
+          :ok -> IO.puts("Database #{config[:database]} created successfully")
+          {:error, reason} -> IO.puts("Failed to create database: #{inspect(reason)}")
+        end
+
+      {:error, _} = err ->
+        IO.inspect(err, label: "Error checking database status")
+    end
+  end
+
   def migrate do
     load_app()
 
