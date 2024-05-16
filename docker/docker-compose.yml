@@ -1,24 +1,15 @@
 services:
-  db:
-    env_file: .env
-    image: postgres:15-alpine
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-  web:
-    env_file: .env
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+  mai-web:
+    env_file: mai.env
+    image: mai
     depends_on:
-      - db
+      - postgres-db
     ports:
       - "4000:4000"
 
-volumes:
-  pgdata:
+networks:
+  cc_network:
 
 networks:
-  mai_network:
+  cc_network:
+    external: true
