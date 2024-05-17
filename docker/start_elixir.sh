@@ -7,9 +7,6 @@ done
 
 echo "PostgreSQL is ready"
 
-echo "Checking and creating database if it doesn't exist..."
-/app/bin/mai eval "Mai.Release.create_database"
-
 echo "Running migrations..."
 /app/bin/mai eval "Mai.Release.migrate"
 
