@@ -7,8 +7,5 @@ done
 
 echo "PostgreSQL is ready"
 
-echo "Running migrations..."
-/app/bin/mai eval "Mai.Release.migrate"
-
 echo "Starting the app & Phoenix server..."
 /app/bin/server
