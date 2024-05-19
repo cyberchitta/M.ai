@@ -30,7 +30,7 @@ config :mai, MaiWeb.Endpoint,
 config :mai, Mai.RepoPostgres,
   url:
     (
-      pg_db = Application.fetch_env!(:mai, Mai.RepoPostgres)[:database]
+      pg_db = if config_env() == :prod, do: env!("POSTGRES_DB"), else: Application.fetch_env!(:mai, Mai.RepoPostgres)[:database]
       pg_user = env!("POSTGRES_USER")
       pg_passwd = env!("POSTGRES_PASSWORD")
       pg_host = env!("POSTGRES_HOST")
