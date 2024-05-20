@@ -20,7 +20,7 @@ defmodule MaiWeb.Router do
     get "/gauth", PageController, :gauth
   end
 
-  scope "/mai", MaiWeb do
+  scope "/", MaiWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/auth/google/callback", GauthController, :callback
