@@ -38,7 +38,7 @@ config :mai, Mai.RepoPostgres,
       pg_user = env!("POSTGRES_USER")
       pg_passwd = env!("POSTGRES_PASSWORD")
       pg_host = env!("POSTGRES_HOST")
-      pg_port = env!("PGPORT")
+      pg_port = env!("POSTGRES_PORT")
       "postgres://#{pg_user}:#{pg_passwd}@#{pg_host}:#{pg_port}/#{pg_db}"
     ),
   ssl: false
