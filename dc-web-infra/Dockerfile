@@ -1,5 +1,3 @@
-# docker/Dockerfile
-
 ARG ELIXIR_VERSION=1.16.2
 ARG OTP_VERSION=26.2.4
 ARG DEBIAN_VERSION=bookworm-20240408-slim
@@ -76,7 +74,7 @@ RUN chown -R nobody /app
 COPY --from=builder --chown=nobody:nobody /app/_build/${MIX_ENV}/rel/mai ./
 
 # Copy the startup script
-COPY docker/start_elixir.sh /app/start_elixir.sh
+COPY dc-web-infra/start_elixir.sh /app/start_elixir.sh
 RUN chmod +x /app/start_elixir.sh
 
 USER nobody
