@@ -7,7 +7,7 @@
       <%= for chat <- period.chats do %>
         <li class="relative z-10" style="opacity: 1; height: auto;">
           <div class="group relative rounded-lg active:opacity-90 bg-base-300">
-            <.link href={~p"/chats/#{chat.id}"} class="flex items-center gap-2 p-2">
+            <.link href={~p"/mai/chats/#{chat.id}"} class="flex items-center gap-2 p-2">
               <div class="relative grow overflow-hidden whitespace-nowrap">
                 <%= chat.name %>
                 <div class="absolute bottom-0 right-0 top-0 bg-gradient-to-l from-base-300 w-20 from-60%">

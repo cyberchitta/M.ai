@@ -25,7 +25,7 @@ defmodule MaiWeb.UserGauth do
       MaiWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
     end
 
-    conn |> renew_session() |> redirect(to: ~p"/")
+    conn |> renew_session() |> redirect(to: ~p"/mai")
   end
 
   def fetch_current_user(conn, _opts) do
@@ -46,7 +46,7 @@ defmodule MaiWeb.UserGauth do
       s =
         socket
         |> Phoenix.LiveView.put_flash(:error, "You must log in to access this page.")
-        |> Phoenix.LiveView.redirect(to: ~p"/gauth")
+        |> Phoenix.LiveView.redirect(to: ~p"/mai/gauth")
 
       {:halt, s}
     end
@@ -91,7 +91,7 @@ defmodule MaiWeb.UserGauth do
       conn
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
-      |> redirect(to: ~p"/gauth")
+      |> redirect(to: ~p"/mai/gauth")
       |> halt()
     end
   end
@@ -108,5 +108,5 @@ defmodule MaiWeb.UserGauth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(_conn), do: ~p"/"
+  defp signed_in_path(_conn), do: ~p"/mai"
 end
