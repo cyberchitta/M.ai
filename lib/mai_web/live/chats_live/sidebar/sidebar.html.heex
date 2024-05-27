@@ -1,4 +1,8 @@
-<div class="bg-base-200 w-80 flex-shrink-0 overflow-x-hidden">
+<div
+  id="sidebar"
+  class={"bg-base-200 w-80 flex-shrink-0 overflow-x-hidden transition-all duration-300 #{if @sidebar_open, do: "", else: "hidden"}"}
+  phx-hook="SidebarToggle"
+>
   <div class="h-full w-80">
     <div class="flex h-full min-h-0 flex-col">
       <div class="relative h-full w-full flex-1 items-start">

@@ -3,16 +3,21 @@
     <div class="absolute left-1/2 -translate-x-1/2"></div>
     <div class="flex items-center gap-2 overflow-hidden juice:gap-0">
       <div class="flex items-center">
-        <span class="" data-state="closed">
-          <button class="h-10 rounded-lg px-2.5 text-base-content/70 focus-visible:outline-0 hover:bg-base-200 focus-visible:bg-base-200">
-            <.icon name="hero-newspaper" class="w-6 h-6" />
-          </button>
-        </span>
-        <span class="" data-state="closed">
-          <button class="h-10 rounded-lg px-2.5 text-base-content/70 focus-visible:outline-0 hover:bg-base-200 focus-visible:bg-base-200">
-            <.icon name="hero-pencil-square" class="w-6 h-6" />
-          </button>
-        </span>
+        <%= if not @sidebar_open do %>
+          <span class="" data-state="closed">
+            <button
+              class="h-10 rounded-lg px-2.5 text-base-content/70 focus-visible:outline-0 hover:bg-base-200 focus-visible:bg-base-200"
+              phx-click="toggle_sidebar"
+            >
+              <.icon name="hero-newspaper" class="w-6 h-6" />
+            </button>
+          </span>
+          <span class="" data-state="closed">
+            <button class="h-10 rounded-lg px-2.5 text-base-content/70 focus-visible:outline-0 hover:bg-base-200 focus-visible:bg-base-200">
+              <.icon name="hero-pencil-square" class="w-6 h-6" />
+            </button>
+          </span>
+        <% end %>
       </div>
       <div
         type="button"

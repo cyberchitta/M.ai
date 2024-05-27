@@ -6,12 +6,21 @@ defmodule MaiWeb.UiState do
     suggestions = Suggestion.get_default()
     picked = Enum.random(suggestions)
     prompt = picked.title <> " " <> picked.description
-    %{sidebar: sidebar(user_email), main: %{suggestions: suggestions, uistate: uistate(prompt)}}
+
+    %{
+      sidebar: sidebar(user_email),
+      main: %{suggestions: suggestions, uistate: uistate(prompt), sidebar_open: true}
+    }
   end
 
   def index(user_email, chat_id) do
     chat = Chat.details(chat_id)
-    %{sidebar: sidebar(user_email), main: Map.put(chat, :uistate, uistate(""))}
+
+    %{
+      sidebar: sidebar(user_email),
+      main: Map.put(chat, :uistate, uistate("")),
+      sidebar_open: true
+    }
   end
 
   defp sidebar(user_email) do

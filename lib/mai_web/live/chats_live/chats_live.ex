@@ -29,6 +29,10 @@ defmodule MaiWeb.ChatsLive do
     {:noreply, socket}
   end
 
+  def handle_event("toggle_sidebar", _, socket) do
+    {:noreply, update(socket, :sidebar_open, fn sidebar_open -> !sidebar_open end)}
+  end
+
   def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
     if Map.get(socket.assigns.main, :chat) do
       handle_submit_existing_chat(prompt, socket)
