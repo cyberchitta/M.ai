@@ -3,9 +3,7 @@
     <div class="flex-1 overflow-hidden">
       <div class="relative h-full">
         <div id="messageContainer" phx-hook="ChatAutoScroll" class="h-full overflow-y-auto">
-          <!--
-            <.header main={@main} />
-            -->
+          <.header main={@main} user={@user}/>
           <%= if get_in(@main, [:chat]) do %>
             <.messages messages={@main.messages} uistate={@main.uistate} />
           <% else %>
