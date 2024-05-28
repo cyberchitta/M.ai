@@ -1,8 +1,8 @@
 {
-    "name": "M.ai",
+    "name": "LLM Chat",
     "dockerComposeFile": "docker-compose.yml",
     "service": "web",
-    "workspaceFolder": "/M.ai",
+    "workspaceFolder": "/llm_chat",
     "shutdownAction": "stopCompose",
     "customizations": {
         "vscode": {
