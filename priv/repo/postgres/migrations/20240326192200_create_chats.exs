@@ -1,4 +1,4 @@
-defmodule Mai.Repo.Postgres.Migrations.CreateChats do
+defmodule LlmChat.Repo.Postgres.Migrations.CreateChats do
   use Ecto.Migration
 
   def change do

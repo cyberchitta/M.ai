@@ -2,4 +2,4 @@
 set -eu
 
 cd -P -- "$(dirname -- "$0")"
-exec ./mai eval Mai.Release.migrate
+exec ./llm_chat eval LlmChat.Release.migrate

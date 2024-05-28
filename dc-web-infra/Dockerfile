@@ -71,7 +71,7 @@ WORKDIR /app
 RUN chown -R nobody /app
 
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:nobody /app/_build/${MIX_ENV}/rel/mai ./
+COPY --from=builder --chown=nobody:nobody /app/_build/${MIX_ENV}/rel/llm_chat ./
 
 # Copy the startup scripts
 COPY dc-web-infra/run_migrations.sh /app/run_migrations.sh

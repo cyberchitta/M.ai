@@ -1,31 +1,31 @@
 import Config
 
-config :mai, MaiWeb.Endpoint,
+config :llm_chat, LlmChatWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: MaiWeb.ErrorHTML, json: MaiWeb.ErrorJSON],
+    formats: [html: LlmChatWeb.ErrorHTML, json: LlmChatWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Mai.PubSub,
+  pubsub_server: LlmChat.PubSub,
   live_view: [signing_salt: "zs6SQ7ka"]
 
-config :mai,
+config :llm_chat,
   generators: [timestamp_type: :utc_datetime]
 
-config :mai, ecto_repos: [Mai.RepoPostgres]
+config :llm_chat, ecto_repos: [LlmChat.RepoPostgres]
 
-config :mai, Mai.RepoPostgres, priv: "priv/repo/postgres"
+config :llm_chat, LlmChat.RepoPostgres, priv: "priv/repo/postgres"
 
-config :mai, Mai.RepoXandra,
+config :llm_chat, LlmChat.RepoXandra,
   migration_primary_key: [name: :id, type: :uuid],
   nodes: ["scylladb"],
-  keyspace: "mai_chat",
+  keyspace: "llm_chat",
   priv: "priv/repo/xandra"
 
 config :esbuild,
   version: "0.17.11",
-  mai: [
+  llm_chat: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
@@ -34,7 +34,7 @@ config :esbuild,
 
 config :tailwind,
   version: "3.4.0",
-  mai: [
+  llm_chat: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css

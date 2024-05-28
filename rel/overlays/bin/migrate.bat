@@ -1,1 +1,1 @@
-call "%~dp0\mai" eval Mai.Release.migrate
+call "%~dp0\llm_chat" eval LlmChat.Release.migrate
