@@ -11,4 +11,4 @@ done
 echo "PostgreSQL is ready"
 
 echo "Running migrations..."
-/app/bin/mai eval "Mai.Release.migrate"
+/app/bin/llm_chat eval "LlmChat.Release.migrate"

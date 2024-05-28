@@ -10,10 +10,10 @@ source!([
 ])
 
 if System.get_env("PHX_SERVER") do
-  config :mai, MaiWeb.Endpoint, server: true
+  config :llm_chat, LlmChatWeb.Endpoint, server: true
 end
 
-config :mai, MaiWeb.Endpoint,
+config :llm_chat, LlmChatWeb.Endpoint,
   secret_key_base: env!("SECRET_KEY_BASE", :string),
   http: [
     ip:
@@ -27,13 +27,13 @@ config :mai, MaiWeb.Endpoint,
     port: env!("PHX_PORT", :integer)
   ]
 
-config :mai, Mai.RepoPostgres,
+config :llm_chat, LlmChat.RepoPostgres,
   url:
     (
       pg_db =
         if config_env() == :prod,
           do: env!("POSTGRES_DB"),
-          else: Application.fetch_env!(:mai, Mai.RepoPostgres)[:database]
+          else: Application.fetch_env!(:llm_chat, LlmChat.RepoPostgres)[:database]
 
       pg_user = env!("POSTGRES_USER")
       pg_passwd = env!("POSTGRES_PASSWORD")
@@ -43,7 +43,7 @@ config :mai, Mai.RepoPostgres,
     ),
   ssl: false
 
-config :mai,
+config :llm_chat,
   openai_api_key: env!("OPENAI_API_KEY")
 
 config :elixir_auth_google,
@@ -53,9 +53,9 @@ config :elixir_auth_google,
 if config_env() == :prod do
   host = env!("PHX_HOST", :string, "example.com")
 
-  config :mai, :dns_cluster_query, env!("DNS_CLUSTER_QUERY", :string?)
+  config :llm_chat, :dns_cluster_query, env!("DNS_CLUSTER_QUERY", :string?)
 
-  config :mai, MaiWeb.Endpoint, url: [host: host, port: 443, scheme: "https"]
+  config :llm_chat, LlmChatWeb.Endpoint, url: [host: host, port: 443, scheme: "https"]
 end
 
 # ## SSL Support
@@ -63,7 +63,7 @@ end
 # To get SSL working, you will need to add the `https` key
 # to your endpoint configuration:
 #
-#     config :mai, MaiWeb.Endpoint,
+#     config :llm_chat, LlmChatWeb.Endpoint,
 #       https: [
 #         ...,
 #         port: 443,
@@ -85,7 +85,7 @@ end
 # We also recommend setting `force_ssl` in your config/prod.exs,
 # ensuring no data is ever sent via http, always redirecting to https:
 #
-#     config :mai, MaiWeb.Endpoint,
+#     config :llm_chat, LlmChatWeb.Endpoint,
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.

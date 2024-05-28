@@ -1,25 +1,25 @@
-defmodule Mai.DataCase do
+defmodule LlmChat.DataCase do
   @moduledoc false
   use ExUnit.CaseTemplate
 
   using do
     quote do
-      alias Mai.RepoPostgres
+      alias LlmChat.RepoPostgres
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Mai.DataCase
+      import LlmChat.DataCase
     end
   end
 
   setup tags do
-    Mai.DataCase.setup_sandbox(tags)
+    LlmChat.DataCase.setup_sandbox(tags)
     :ok
   end
 
   def setup_sandbox(tags) do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Mai.RepoPostgres, shared: not tags[:async])
+    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(LlmChat.RepoPostgres, shared: not tags[:async])
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
   end
 

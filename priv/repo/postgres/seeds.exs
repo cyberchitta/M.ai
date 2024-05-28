@@ -1,7 +1,7 @@
-alias Mai.RepoPostgres
-alias Mai.Schemas.User
-alias Mai.Schemas.Chat
-alias Mai.Schemas.Message
+alias LlmChat.RepoPostgres
+alias LlmChat.Schemas.User
+alias LlmChat.Schemas.Chat
+alias LlmChat.Schemas.Message
 
 create_user_data = fn user_attrs ->
   user = %User{}
