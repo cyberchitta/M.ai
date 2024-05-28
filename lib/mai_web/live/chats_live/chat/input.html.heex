@@ -3,9 +3,6 @@
   class="flex flex-row gap-3 mx-2 md:mx-4 lg:mx-auto lg:max-w-2xl xl:max-w-3xl"
 >
   <div class="relative flex h-full flex-1 flex-col">
-    <%= unless get_in(@main, [:chat]) do %>
-      <.suggestions suggestions={@main.suggestions} />
-    <% end %>
     <div class="flex w-full items-center">
       <div class="overflow-hidden flex flex-col w-full flex-grow relative border border-base-300 rounded-2xl bg-base-100">
         <textarea

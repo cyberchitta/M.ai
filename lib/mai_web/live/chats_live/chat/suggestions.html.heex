@@ -1,15 +1,12 @@
-<div class="absolute bottom-full left-0 right-0">
-  <div class="h-full flex ml-1 md:w-full md:m-auto md:mb-4 gap-0 md:gap-2 justify-center">
-    <div class="absolute bottom-full left-0 mb-4 flex w-full grow gap-2 px-1 pb-1 sm:px-2 sm:pb-0 md:static md:mb-0 md:max-w-none">
-      <div class="grid w-full grid-flow-row grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-2">
-        <%= for {suggestion, index} <- Enum.with_index(@suggestions) do %>
-          <.suggestion
-            title={suggestion.title}
-            description={suggestion.description}
-            index={index}
-          />
-        <% end %>
-      </div>
+<div style="opacity: 1;">
+  <div class="mx-3 mt-12 flex max-w-3xl flex-wrap items-stretch justify-center gap-4">
+    <div class="flex max-w-3xl flex-wrap items-stretch justify-center gap-4">
+      <.suggestion name="hero-light-bulb" class="text-yellow-400" text={Enum.at(@suggestions, 0)} />
+      <.suggestion name="hero-academic-cap" class="text-blue-400" text={Enum.at(@suggestions, 1)} />
+    </div>
+    <div class="flex max-w-3xl flex-wrap items-stretch justify-center gap-4">
+      <.suggestion name="hero-pencil" class="text-fuchsia-400" text={Enum.at(@suggestions, 2)} />
+      <.suggestion name="hero-window" class="text-amber-400" text={Enum.at(@suggestions, 3)} />
     </div>
   </div>
 </div>

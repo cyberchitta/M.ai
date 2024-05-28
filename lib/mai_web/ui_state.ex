@@ -4,12 +4,12 @@ defmodule MaiWeb.UiState do
 
   def index(user_email) do
     suggestions = Suggestion.get_default()
-    picked = Enum.random(suggestions)
-    prompt = picked.title <> " " <> picked.description
+    prompt = Enum.random(suggestions)
 
     %{
       sidebar: sidebar(user_email),
-      main: %{suggestions: suggestions, uistate: uistate(prompt), sidebar_open: true}
+      main: %{suggestions: suggestions, uistate: uistate(prompt)},
+      sidebar_open: true
     }
   end
 
