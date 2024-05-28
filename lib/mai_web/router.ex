@@ -13,7 +13,7 @@ defmodule MaiWeb.Router do
     plug :fetch_current_user
   end
 
-  scope "/mai", MaiWeb do
+  scope "/", MaiWeb do
     pipe_through :browser
 
     get "/", PageController, :index
@@ -26,7 +26,7 @@ defmodule MaiWeb.Router do
     get "/auth/google/callback", GauthController, :callback
   end
 
-  scope "/mai", MaiWeb do
+  scope "/", MaiWeb do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/logout", GauthController, :logout
@@ -41,7 +41,7 @@ defmodule MaiWeb.Router do
   if Application.compile_env(:mai, :dev_routes) do
     import Phoenix.LiveDashboard.Router
 
-    scope "/mai/admin" do
+    scope "/admin" do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: MaiWeb.Telemetry
     end

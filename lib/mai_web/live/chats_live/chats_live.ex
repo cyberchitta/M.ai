@@ -22,11 +22,15 @@ defmodule MaiWeb.ChatsLive do
 
   def handle_params(%{"id" => chat_id, "prompt" => prompt}, _uri, socket) do
     send(self(), {:submit_prompt, URI.decode(prompt)})
-    {:noreply, socket |> push_patch(to: ~p"/mai/chats/#{chat_id}", replace: true)}
+    {:noreply, socket |> push_patch(to: ~p"/chats/#{chat_id}", replace: true)}
   end
 
   def handle_params(_params, _uri, socket) do
     {:noreply, socket}
+  end
+
+  def handle_event("toggle_sidebar", _, socket) do
+    {:noreply, update(socket, :sidebar_open, fn sidebar_open -> !sidebar_open end)}
   end
 
   def handle_event("submit", %{"prompt-textarea" => prompt}, socket) do
@@ -86,7 +90,8 @@ defmodule MaiWeb.ChatsLive do
   defp handle_submit_new_chat(prompt, socket) do
     user = socket.assigns.user
     chat = Chat.create(%{name: "NewChat", description: "Unnamed", user_id: user.id})
-    {:noreply, socket |> push_navigate(to: ~p"/mai/chats/#{chat.id}?prompt=#{URI.encode(prompt)}")}
+
+    {:noreply, socket |> push_navigate(to: ~p"/chats/#{chat.id}?prompt=#{URI.encode(prompt)}")}
   end
 
   defp handle_submit_existing_chat(prompt, socket) do

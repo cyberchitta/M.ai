@@ -7,7 +7,7 @@ defmodule MaiWeb.PageControllerTest do
   end
 
   test "GET /", %{conn: conn} do
-    conn = get(conn, ~p"/mai")
+    conn = get(conn, ~p"/")
 
     assert html_response(conn, 200) =~
              "Please note: You will need to authenticate with Google to access the chat features."
